@@ -15,6 +15,7 @@ export class AppComponent {
   rowCount: number;    
   selectedSortType: number = 1;
   selectedSeatType: number = 3;
+  isIgnoreCaps:boolean=true;
 
   SortType;
   SeatType;
@@ -88,6 +89,11 @@ export class AppComponent {
         }
         case 3: {
           seat.Src = "../assets/Images/red.png";
+          seat.SeatClass=3;
+          break;
+        }
+        case 4: {
+          seat.Src = "../assets/Images/gray.png";
           seat.SeatClass=3;
           break;
         }

@@ -4,7 +4,7 @@ import { ISortService } from './ISortService';
 
 @Injectable()
 export class SortService implements ISortService {
-
+    basePositionCordinate:number=52;
     constructor() { }
 
     SortLeftToRight(rowCount: number, columnCount: number) {
@@ -13,7 +13,7 @@ export class SortService implements ISortService {
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
             for (var c = 0; c < columnCount; c++) {
-                var st = new Seat(seatCounter, 52 * r, 52 * c, 1);
+                var st = new Seat(seatCounter, this.basePositionCordinate * r, this.basePositionCordinate * c, 1);
                 SeatList.push(st);
                 seatCounter++;
             }
@@ -27,7 +27,7 @@ export class SortService implements ISortService {
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
             for (var c = 0; c < columnCount; c++) {
-                var st = new Seat(seatCounter, 52 * (rowCount-r), 52 * c, 1);
+                var st = new Seat(seatCounter, this.basePositionCordinate * (rowCount-r), this.basePositionCordinate * c, 1);
                 SeatList.push(st);
                 seatCounter++;
             }
@@ -43,7 +43,7 @@ export class SortService implements ISortService {
             var currentNo = seatCounter;
             var posCount=0;
             for (var c = columnCount; c > 0; c--) {
-                var st = new Seat(Number(currentNo) + Number(c) - 1, 52 * r, 52 * posCount, 1);
+                var st = new Seat(Number(currentNo) + Number(c) - 1, this.basePositionCordinate * r, this.basePositionCordinate * posCount, 1);
                 SeatList.push(st);
                 posCount++;
                 seatCounter++;
@@ -59,7 +59,7 @@ export class SortService implements ISortService {
             var SeatList: Seat[] = [];
             var currentNo = seatCounter;
             for (var c = columnCount; c > 0; c--) {
-                var st = new Seat(Number(currentNo) + Number(c) - 1, 52 * (rowCount- r), 52 * (columnCount-c), 1);
+                var st = new Seat(Number(currentNo) + Number(c) - 1, this.basePositionCordinate * (rowCount- r),this.basePositionCordinate * (columnCount-c), 1);
                 SeatList.push(st);
                 seatCounter++;
             }
@@ -75,7 +75,7 @@ export class SortService implements ISortService {
             var SeatList: Seat[] = [];
             if (isReversSort == false) {
                 for (var c = 0; c < columnCount; c++) {
-                    var st = new Seat(seatCounter, 52 * r, 52 * c, 1);
+                    var st = new Seat(seatCounter, this.basePositionCordinate * r, this.basePositionCordinate * c, 1);
                     SeatList.push(st);
                     seatCounter++;
                 }
@@ -88,7 +88,7 @@ export class SortService implements ISortService {
                     //console.log("count" + columnCount);
                     //console.log("currentNo" + currentNo);
 
-                    var st = new Seat(Number(currentNo) + Number(c) - 1, 52 * r, 52 * (columnCount-c), 1);
+                    var st = new Seat(Number(currentNo) + Number(c) - 1, this.basePositionCordinate * r, this.basePositionCordinate * (columnCount-c), 1);
                     SeatList.push(st);
                     seatCounter++;
                 }
@@ -106,7 +106,7 @@ export class SortService implements ISortService {
             var SeatList: Seat[] = [];
             if (isReversSort == false) {
                 for (var c = 0; c < columnCount; c++) {
-                    var st = new Seat(seatCounter, 52 * (rowCount- r), 52 *  c, 1);
+                    var st = new Seat(seatCounter, this.basePositionCordinate * (rowCount- r), this.basePositionCordinate *  c, 1);
                     SeatList.push(st);
                     seatCounter++;
                 }
@@ -119,7 +119,7 @@ export class SortService implements ISortService {
                     //console.log("count" + columnCount);
                     //console.log("currentNo" + currentNo);
 
-                    var st = new Seat(Number(currentNo) + Number(c) - 1, 52 * (rowCount-r), 52 * (columnCount-c), 1);
+                    var st = new Seat(Number(currentNo) + Number(c) - 1, this.basePositionCordinate * (rowCount-r), this.basePositionCordinate * (columnCount-c), 1);
                     SeatList.push(st);
                     seatCounter++;
                 }
@@ -137,7 +137,7 @@ export class SortService implements ISortService {
             var SeatList: Seat[] = [];
             if (isReversSort == false) {
                 for (var c = 0; c < columnCount; c++) {
-                    var st = new Seat(seatCounter, 52 * r, 52 * c, 1);
+                    var st = new Seat(seatCounter, this.basePositionCordinate * r, this.basePositionCordinate * c, 1);
                     SeatList.push(st);
                     seatCounter++;
                 }
@@ -150,7 +150,7 @@ export class SortService implements ISortService {
                     //console.log("count" + columnCount);
                     //console.log("currentNo" + currentNo);
 
-                    var st = new Seat(Number(currentNo) + Number(c) - 1, 52 * r, 52 * (columnCount-c), 1);
+                    var st = new Seat(Number(currentNo) + Number(c) - 1, this.basePositionCordinate * r, this.basePositionCordinate * (columnCount-c), 1);
                     SeatList.push(st);
                     seatCounter++;
                 }
@@ -168,7 +168,7 @@ export class SortService implements ISortService {
             var SeatList: Seat[] = [];
             if (isReversSort == false) {
                 for (var c = 0; c < columnCount; c++) {
-                    var st = new Seat(seatCounter, 52 * (rowCount- r), 52 * c, 1);
+                    var st = new Seat(seatCounter, this.basePositionCordinate * (rowCount- r), this.basePositionCordinate * c, 1);
                     SeatList.push(st);
                     seatCounter++;
                 }
@@ -181,7 +181,7 @@ export class SortService implements ISortService {
                     //console.log("count" + columnCount);
                     //console.log("currentNo" + currentNo);
 
-                    var st = new Seat(Number(currentNo) + Number(c) - 1, 52 * (rowCount-r), 52 * (columnCount-c), 1);
+                    var st = new Seat(Number(currentNo) + Number(c) - 1, this.basePositionCordinate * (rowCount-r), this.basePositionCordinate * (columnCount-c), 1);
                     SeatList.push(st);
                     seatCounter++;
                 }
@@ -227,5 +227,8 @@ export class SortService implements ISortService {
         {
             id: 3, name: "Satış"
         },
+        {
+            id: 4, name: "İptal"
+        }
     ];
 }

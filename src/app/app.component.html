@@ -16,12 +16,17 @@
                  <option *ngFor="let type of SortType" [ngValue]="type.id">{{type.name}}</option>
               </select>
   </div>
-   <div class="form-group">
+  <div class="form-group">
     <label class="control-label"> Koltuk İşlem Tipi</label>
     <select [(ngModel)]="selectedSeatType" class="selectpicker">
                  <option *ngFor="let type of SeatType" [ngValue]="type.id">{{type.name}}</option>
               </select>
+    <div class="checkbox">
+      <label><input type="checkbox" name="checkIgnoreCaps" [(ngModel)]="isIgnoreCaps"><b>Ignore Caps</b></label>
+    </div>
   </div>
+
+
   <input type="button" class="btn btn-primary" value="Oluştur" (click)="DrawSeats()">
   <seat [ContainerSeat]="Container" (clickSeat)="BuySeat($event)"></seat>
   <!--<table>
