@@ -27,7 +27,7 @@ export class SortService implements ISortService {
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
             for (var c = 0; c < columnCount; c++) {
-                var st = new Seat(seatCounter, 52 * r, 52 * c, 1);
+                var st = new Seat(seatCounter, 52 * (rowCount-r), 52 * c, 1);
                 SeatList.push(st);
                 seatCounter++;
             }
@@ -41,9 +41,11 @@ export class SortService implements ISortService {
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
             var currentNo = seatCounter;
+            var posCount=0;
             for (var c = columnCount; c > 0; c--) {
-                var st = new Seat(Number(currentNo) + Number(c) - 1, 52 * r, 52 * c, 1);
+                var st = new Seat(Number(currentNo) + Number(c) - 1, 52 * r, 52 * posCount, 1);
                 SeatList.push(st);
+                posCount++;
                 seatCounter++;
             }
             Container.push(SeatList);
@@ -57,7 +59,7 @@ export class SortService implements ISortService {
             var SeatList: Seat[] = [];
             var currentNo = seatCounter;
             for (var c = columnCount; c > 0; c--) {
-                var st = new Seat(Number(currentNo) + Number(c) - 1, 52 * r, 52 * c, 1);
+                var st = new Seat(Number(currentNo) + Number(c) - 1, 52 * (rowCount- r), 52 * (columnCount-c), 1);
                 SeatList.push(st);
                 seatCounter++;
             }
@@ -86,7 +88,7 @@ export class SortService implements ISortService {
                     //console.log("count" + columnCount);
                     //console.log("currentNo" + currentNo);
 
-                    var st = new Seat(Number(currentNo) + Number(c) - 1, 52 * r, 52 * c, 1);
+                    var st = new Seat(Number(currentNo) + Number(c) - 1, 52 * r, 52 * (columnCount-c), 1);
                     SeatList.push(st);
                     seatCounter++;
                 }
@@ -104,7 +106,7 @@ export class SortService implements ISortService {
             var SeatList: Seat[] = [];
             if (isReversSort == false) {
                 for (var c = 0; c < columnCount; c++) {
-                    var st = new Seat(seatCounter, 52 * r, 52 * c, 1);
+                    var st = new Seat(seatCounter, 52 * (rowCount- r), 52 *  c, 1);
                     SeatList.push(st);
                     seatCounter++;
                 }
@@ -117,7 +119,7 @@ export class SortService implements ISortService {
                     //console.log("count" + columnCount);
                     //console.log("currentNo" + currentNo);
 
-                    var st = new Seat(Number(currentNo) + Number(c) - 1, 52 * r, 52 * c, 1);
+                    var st = new Seat(Number(currentNo) + Number(c) - 1, 52 * (rowCount-r), 52 * (columnCount-c), 1);
                     SeatList.push(st);
                     seatCounter++;
                 }
@@ -148,7 +150,7 @@ export class SortService implements ISortService {
                     //console.log("count" + columnCount);
                     //console.log("currentNo" + currentNo);
 
-                    var st = new Seat(Number(currentNo) + Number(c) - 1, 52 * r, 52 * c, 1);
+                    var st = new Seat(Number(currentNo) + Number(c) - 1, 52 * r, 52 * (columnCount-c), 1);
                     SeatList.push(st);
                     seatCounter++;
                 }
@@ -166,7 +168,7 @@ export class SortService implements ISortService {
             var SeatList: Seat[] = [];
             if (isReversSort == false) {
                 for (var c = 0; c < columnCount; c++) {
-                    var st = new Seat(seatCounter, 52 * r, 52 * c, 1);
+                    var st = new Seat(seatCounter, 52 * (rowCount- r), 52 * c, 1);
                     SeatList.push(st);
                     seatCounter++;
                 }
@@ -179,7 +181,7 @@ export class SortService implements ISortService {
                     //console.log("count" + columnCount);
                     //console.log("currentNo" + currentNo);
 
-                    var st = new Seat(Number(currentNo) + Number(c) - 1, 52 * r, 52 * c, 1);
+                    var st = new Seat(Number(currentNo) + Number(c) - 1, 52 * (rowCount-r), 52 * (columnCount-c), 1);
                     SeatList.push(st);
                     seatCounter++;
                 }
