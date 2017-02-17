@@ -1,0 +1,38 @@
+<div class="container">
+  <h3>
+    {{title}}
+  </h3>
+  <div class="form-group">
+    <label class="control-label"> Satır Sayısı</label>
+    <input type="text" class="form-control" name="rowCount" [(ngModel)]="rowCount">
+  </div>
+  <div class="form-group">
+    <label class="control-label"> Sütun Sayısı</label>
+    <input type="text" class="form-control" name="columnCount" [(ngModel)]="columnCount">
+  </div>
+  <div class="form-group">
+    <label class="control-label"> Sıralama Şekli</label>
+    <select [(ngModel)]="selectedSortType" class="selectpicker">
+                 <option *ngFor="let type of SortType" [ngValue]="type.id">{{type.name}}</option>
+              </select>
+  </div>
+   <div class="form-group">
+    <label class="control-label"> Koltuk İşlem Tipi</label>
+    <select [(ngModel)]="selectedSeatType" class="selectpicker">
+                 <option *ngFor="let type of SeatType" [ngValue]="type.id">{{type.name}}</option>
+              </select>
+  </div>
+  <input type="button" class="btn btn-primary" value="Oluştur" (click)="DrawSeats()">
+  <seat [ContainerSeat]="Container" (clickSeat)="BuySeat($event)"></seat>
+  <!--<table>
+    <tbody>
+      <tr *ngFor="let row of Container">
+        <td *ngFor="let seat of row" (click)="BuySeat(seat)">
+          <div>
+            <img [src]="seat.Src" />{{seat.RowNumber}}
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>-->
+</div>
