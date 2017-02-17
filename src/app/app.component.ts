@@ -7,6 +7,7 @@ import { SortService } from '../Services/SortService';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
   title = 'Koltuk sayısı giriniz';
   Container = [];
