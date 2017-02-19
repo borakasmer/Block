@@ -1,7 +1,7 @@
 export class Coordinate 
 {
-    X:number;
-    Y:number;
+    public X:number;
+    public Y:number;
 
     constructor(X:number, Y:number)
     {

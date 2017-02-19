@@ -1,32 +1,22 @@
-<!--
-<table (mousedown)="onMouseDown($event)" 
-       (mouseup)="onMouseUp($event)" 
-                (mouseenter)="onEvent($event)"
-                (mouseleave)="onEvent($event)"
-                (mousemove)="onCoordinates($event)" >
-                
-    <tbody>
-      <tr *ngFor="let row of _ContainerSeat">
-        <td *ngFor="let seat of row" (click)="TriggerEvent(seat)">
-          <div style="width:50px; height: 50px; text-align: center;" [style.background-image]="'url(' + seat.Src + ')'">
-            <span style="display: block; padding-top: 13px; ">{{seat.RowNumber}}</span>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
--->
+<div id="block-seat-container" (mouseenter)="onMouseEnter($event)" (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave($event)">
+    <div class="seat-row" *ngFor="let row of _ContainerSeat">
+        <div class="seat" *ngFor="let seat of row" (click)="TriggerEvent(seat)" 
+            [style.top.px]="seat.Top" 
+            [style.left.px]="seat.Left" 
+            [style.background-image]="'url(' + seat.Src + ')'" 
+            [attr.top]="seat.Top" 
+            [attr.left]="seat.Left">
+          <span class="seat-label">{{ seat.RowNumber }}</span>
+        </div>
+    </div>
+    <div #resizable class="resizableSelector" [style.display]="startSelect"></div>
 
-<div id="block-container" style="position: relative" (mousedown)="onMouseDown($event)" (mouseup)="onMouseUp($event)" (mouseenter)="onEvent($event)"
-  (mouseleave)="onEvent($event)" (mousemove)="onCoordinates($event)">
-  <div class="seat-row" style="display: table" *ngFor="let row of _ContainerSeat">
-    <div class="seat" *ngFor="let seat of row" (click)="TriggerEvent(seat)" style="float:left; width:50px; height: 50px; text-align: center; padding-top: 10px; position: absolute;"
-      [style.top.px]="seat.Top" [style.left.px]="seat.Left" [style.background-image]="'url(' + seat.Src + ')'" [attr.top]="seat.Top" [attr.left]="seat.Left">
-      <span>{{ seat.RowNumber }}</span>
-  </div>
-  </div>
-  </div>
-  <div class="info" style="position: relative; left:400px; top:-118px">
-    <p class="type">Type: {{event?.type}}</p>
-    <p>x: {{clientX}}, y: {{clientY}}</p>
-  </div>
+
+
+
+
+    <div class="info" style="position: relative; left:400px; top:-118px">
+        <p class="type">Type: {{event?.type}}</p>
+        <p>x: {{clientX}}, y: {{clientY}}</p>
+    </div>
+</div>

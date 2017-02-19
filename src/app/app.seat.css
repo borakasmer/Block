@@ -1,0 +1,41 @@
+#block-seat-container
+{
+    position: relative; 
+    margin-top:30px; 
+    -webkit-touch-callout: none; 
+    -webkit-user-select: none; 
+    -khtml-user-select: none; 
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none;
+}
+
+.seat-row
+{
+    display: table;
+}
+
+.seat
+{
+    float:left; 
+    width:50px; 
+    height: 50px; 
+    text-align: center; 
+    padding-top: 10px; 
+    position: absolute;
+}
+
+.seat-label, .seat-label:hover
+{
+    cursor:default
+}
+
+.resizableSelector
+{
+    position: fixed; 
+    cursor: default; 
+    top:0px; left:0px; 
+    background-color: #90b9f9; 
+    border:1px solid #5d9bfc; 
+    opacity: 0.5;
+}
