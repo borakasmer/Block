@@ -4,7 +4,7 @@ import { ISortService } from './ISortService';
 
 @Injectable()
 export class SortService implements ISortService {
-    basePositionCordinate:number=52;
+    basePositionCordinate:number=50;
     constructor() { }
 
     SortLeftToRight(rowCount: number, columnCount: number) {

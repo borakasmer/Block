@@ -1,4 +1,4 @@
-<div id="block-seat-container" (mouseenter)="onMouseEnter($event)" (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave($event)">
+<div #blockseatcontainer id="block-seat-container" (mouseenter)="onMouseEnter($event)" (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave($event)" (mouseup)="onMouseUp($event)">
     <div class="seat-row" *ngFor="let row of _ContainerSeat">
         <div class="seat" *ngFor="let seat of row" (click)="TriggerEvent(seat)" 
             [style.top.px]="seat.Top" 
@@ -11,12 +11,8 @@
     </div>
     <div #resizable class="resizableSelector" [style.display]="startSelect"></div>
 
-
-
-
-
-    <div class="info" style="position: relative; left:400px; top:-118px">
-        <p class="type">Type: {{event?.type}}</p>
-        <p>x: {{clientX}}, y: {{clientY}}</p>
-    </div>
+    <div class="info" style="position: absolute; left:650px; top:-118px">
+        <p class="type">Container Offset</p>
+        <p>x: {{containerX}},   y: {{containerY}}</p>
+    </div>  
 </div>
