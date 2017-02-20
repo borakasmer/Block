@@ -9,7 +9,6 @@
     -moz-user-select: none; 
     -ms-user-select: none; 
     user-select: none;
-    border:1px solid #dbe9fc;
 }
 
 .seat-row, .seat-row:hover
