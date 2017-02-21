@@ -62,7 +62,8 @@ export class AppComponent {
         }
       case "Sağdan Sola Aşağıdan Başla":
         {
-          this.Container = this.sortService.SortRightToLeftFormDown(this.rowCount, this.columnCount);
+          this.Container = this.sortService.SortRightToLeftFormDown(this.rowCount, this.columnCount,currentList,isIgnoreGaps);
+          //this.Container = this.sortService.SortRightToLeftFormDown(this.rowCount, this.columnCount);
           break;
         }
       case "ZigZag Sağdan Sola Aşağıdan Başla":
