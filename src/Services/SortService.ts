@@ -4,7 +4,7 @@ import { ISortService } from './ISortService';
 
 @Injectable()
 export class SortService implements ISortService {
-    basePositionCordinate: number = 52;
+    basePositionCordinate: number = 50;
     constructor() { }
 
     //currentList var ise dizilmiş olna koltukların eski halleri gönderilmiş demektir.
