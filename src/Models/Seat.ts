@@ -1,15 +1,17 @@
 export class Seat {
-    RowNumber: number;
+    RowNumber?: number;
     Top:number;
     Left:number;
     SeatClass:number;
     Src:string;
-    constructor(rowNumber:number,top:number,left:number,seatClass:number)
+    ID:number;
+    constructor(rowNumber:number,top:number,left:number,seatClass:number,id:number)
     {
         this.Left=left;
         this.RowNumber=rowNumber;
         this.Top=top;
         this.SeatClass=seatClass;
+        this.ID=id;
         switch(this.SeatClass)
         {
             case 1:{
@@ -22,6 +24,10 @@ export class Seat {
             }
              case 3:{
                 this.Src="../assets/Images/red.png";
+                break;
+            }
+             case 4:{
+                this.Src="../assets/Images/gray.png";
                 break;
             }
         }        

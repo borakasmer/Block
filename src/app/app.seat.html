@@ -6,7 +6,7 @@
             [style.background-image]="'url(' + seat.Src + ')'" 
             [attr.top]="seat.Top" 
             [attr.left]="seat.Left">
-          <span class="seat-label">{{ seat.RowNumber }}</span>
+          <span class="seat-label" *ngIf="seat.SeatClass!=4">{{ seat.RowNumber }}</span>
         </div>
     </div>
     <div #resizable class="resizableSelector" [style.display]="startSelect"></div>

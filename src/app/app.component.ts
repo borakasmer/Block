@@ -12,10 +12,10 @@ export class AppComponent {
   title = 'Koltuk sayısı giriniz';
   Container = [];
   columnCount: number;
-  rowCount: number;    
+  rowCount: number;
   selectedSortType: number = 1;
   selectedSeatType: number = 3;
-  isIgnoreCaps:boolean=true;
+  isIgnoreGaps: boolean = true;
 
   SortType;
   SeatType;
@@ -28,11 +28,11 @@ export class AppComponent {
     this.SeatType = sortService.SeatType;
   }
 
-  DrawSeats() {
+  DrawSeats(currentList?:Array<Seat>,isIgnoreGaps?:boolean) {
     switch (this.SortType.filter(f => f.id == this.selectedSortType)[0].name) {
       case "Soldan Sağ":
         {
-          this.Container = this.sortService.SortLeftToRight(this.rowCount, this.columnCount);
+          this.Container = this.sortService.SortLeftToRight(this.rowCount, this.columnCount,currentList,isIgnoreGaps);
           break;
         }
       case "ZigZag Soldan Sağ":
@@ -52,7 +52,7 @@ export class AppComponent {
         }
       case "Sağdan Sola":
         {
-          this.Container = this.sortService.SortRightToLeft(this.rowCount, this.columnCount);
+          this.Container = this.sortService.SortRightToLeft(this.rowCount, this.columnCount,currentList,isIgnoreGaps);
           break;
         }
       case "Soldan Sağ Aşağıdan Başla":
@@ -70,7 +70,7 @@ export class AppComponent {
           this.Container = this.sortService.SortSnakeRightToLeftFromDown(this.rowCount, this.columnCount);
           break;
         }
-    }    
+    }
   }
   seatType = SeatStatus;
 
@@ -79,29 +79,54 @@ export class AppComponent {
       switch (this.selectedSeatType) {
         case 1: {
           seat.Src = "../assets/Images/green.png";
-          seat.SeatClass=1;
+          seat.SeatClass = 1;
           break;
         }
         case 2: {
           seat.Src = "../assets/Images/blue.png";
-          seat.SeatClass=2;
+          seat.SeatClass = 2;
           break;
         }
         case 3: {
           seat.Src = "../assets/Images/red.png";
-          seat.SeatClass=3;
+          seat.SeatClass = 3;
           break;
         }
         case 4: {
           seat.Src = "../assets/Images/gray.png";
-          seat.SeatClass=3;
+          seat.SeatClass = 4;
+
+          //2li dizi içerisindeki tüm koltuklar(seat)ler tek bir diziye atanır.
+          //Amaç: Servisde herbiri gezilerek eski durumları korunur.
+          var currentList = [];
+          for (var i = 0; i < this.Container.length; i++) {
+            this.Container[i].forEach(seatItem => {
+              currentList.push(seatItem);
+            });
+          }
+          //this.Container = this.sortService.SortLeftToRight(this.rowCount, this.columnCount, currentList, this.isIgnoreGaps);
+          this.DrawSeats(currentList, this.isIgnoreGaps);
           break;
         }
       }
     }
     else {
+      var triggerSort: boolean = false;
+      if (seat.SeatClass == 4) { triggerSort = true; }
+
       seat.Src = "../assets/Images/green.png";
-      seat.SeatClass=1;
+      seat.SeatClass = 1;
+
+      //2li dizi içerisindeki tüm koltuklar(seat)ler tek bir diziye atanır.
+      //Amaç: Servisde herbiri gezilerek eski durumları korunur.
+      var currentList=[];
+      for (var i = 0; i < this.Container.length; i++) {
+        this.Container[i].forEach(seatItem => {
+          currentList.push(seatItem);
+        });
+      }
+      //this.Container = this.sortService.SortLeftToRight(this.rowCount, this.columnCount, currentList, this.isIgnoreGaps);
+      this.DrawSeats(currentList, this.isIgnoreGaps);
     }
   }
 }

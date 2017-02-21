@@ -4,18 +4,37 @@ import { ISortService } from './ISortService';
 
 @Injectable()
 export class SortService implements ISortService {
-    basePositionCordinate:number=52;
+    basePositionCordinate: number = 52;
     constructor() { }
 
-    SortLeftToRight(rowCount: number, columnCount: number) {
+    //currentList var ise dizilmiş olna koltukların eski halleri gönderilmiş demektir.
+    //isIgnoreGaps: Koltuk iptal işileminde, sıralama anında iptal edilen koltuk sayılsın mı sayılmasın mı?
+    SortLeftToRight(rowCount: number, columnCount: number, currentList?: Seat[], isIgnoreGaps?: boolean) {
         var Container = [];
         var seatCounter = 1;
+        var seatCounterUnique = 1;
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
             for (var c = 0; c < columnCount; c++) {
-                var st = new Seat(seatCounter, this.basePositionCordinate * r, this.basePositionCordinate * c, 1);
+
+                //Eklenecek koltuğun eski durumu var mı diye bakılır? Varsa  var olan güncel hali alınır.
+                var currentSeat = currentList != null && currentList != undefined ?
+                    currentList.filter(se => se.ID == seatCounterUnique) : null;
+
+                //
+                var st = new Seat(
+                    //(currentSeat != null && currentSeat[0].SeatClass == 4 && isIgnoreGaps) ? null : seatCounter,
+                    seatCounter,
+                    this.basePositionCordinate * r, this.basePositionCordinate * c,
+                    currentSeat != null ? currentSeat[0].SeatClass : 1, seatCounterUnique);
                 SeatList.push(st);
-                seatCounter++;
+                seatCounterUnique++;
+                if (st.SeatClass == 4 && isIgnoreGaps) {
+
+                }
+                else {
+                    seatCounter++;
+                }
             }
             Container.push(SeatList);
         }
@@ -27,7 +46,7 @@ export class SortService implements ISortService {
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
             for (var c = 0; c < columnCount; c++) {
-                var st = new Seat(seatCounter, this.basePositionCordinate * (rowCount-r), this.basePositionCordinate * c, 1);
+                var st = new Seat(seatCounter, this.basePositionCordinate * (rowCount - 1 - r), this.basePositionCordinate * c, 1, seatCounter);
                 SeatList.push(st);
                 seatCounter++;
             }
@@ -35,20 +54,82 @@ export class SortService implements ISortService {
         }
         return Container.reverse();
     }
-    SortRightToLeft(rowCount: number, columnCount: number) {
+    /*SortRightToLeft(rowCount: number, columnCount: number, currentList?: Seat[], isIgnoreGaps?: boolean) {
         var Container = [];
-        var seatCounter = 1;
+        var seatCounter = 1; //Seat'in ID alanına denk gelmektedir.     
+        var activeCounter = 1; //Toplam Aktif Satır sayısı pasive olmaması durumunda bir sonraki satıra toplam satır sayısı olarak aktarılması için arttırılır.
+
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
-            var currentNo = seatCounter;
-            var posCount=0;
+            var currentNo = activeCounter;//ilgili aynı sıradaki herbir colomun için aynı olan satırın, ilk elemanını sıra sayısı.
+            var posCount = 0;
+
+            //Bir sonraki satırda kaç eleman ekleneceği pasif olmayanlarını sayısı bulunarak belirlenir.
+            var colCount = 0;
+            if (currentList != null && currentList != undefined) {
+                for (var c = columnCount; c > 0; c--) {
+                    if (currentList[Number(seatCounter) + Number(c) - 2].SeatClass != 4) {
+                        colCount++;
+                    }
+                }
+            }
+            else {
+                //Eğer gelen hiçbir geçerli liste yok ise o zaman colon sayısı kadar yani tam değer alınır.
+                colCount = columnCount;
+            }
+            //Bir sonraki satırdaki toplam pozitif kayıt sayısı bulunmuştur.
+
             for (var c = columnCount; c > 0; c--) {
-                var st = new Seat(Number(currentNo) + Number(c) - 1, this.basePositionCordinate * r, this.basePositionCordinate * posCount, 1);
+                //Eklenecek koltuğun eski durumu var mı diye bakılır? Varsa  var olan güncel hali alınır.
+                var currentSeat = currentList != null && currentList != undefined ?
+                    currentList.filter(se => se.ID == seatCounter) : null;
+
+                var st = new Seat(Number(currentNo) + Number(colCount) - 1, this.basePositionCordinate * r, this.basePositionCordinate * posCount,
+                    currentSeat != null ? currentSeat[0].SeatClass : 1, seatCounter);
                 SeatList.push(st);
                 posCount++;
                 seatCounter++;
+
+                if (st.SeatClass == 4 && isIgnoreGaps) {
+                    //pasif durumda hiç bir işlem yapılmaz boş geçilir.
+                }
+                else {
+                    colCount--;//Aktıf olduğu için değer 1 azaltılır.
+                    activeCounter++ //Toplam Aktif Satır sayısı bir sonraki satıra aktarılır.
+                }
             }
             Container.push(SeatList);
+        }
+        return Container;
+    }*/
+    SortRightToLeft(rowCount: number, columnCount: number, currentList?: Seat[], isIgnoreGaps?: boolean) {
+        var Container = [];
+        var seatCounter = 1;
+        var seatCounterUnique = 1;
+        for (var r = 0; r < rowCount; r++) {
+            var SeatList: Seat[] = [];
+            for (var c = 0; c < columnCount; c++) {
+
+                //Eklenecek koltuğun eski durumu var mı diye bakılır? Varsa  var olan güncel hali alınır.
+                var currentSeat = currentList != null && currentList != undefined ?
+                    currentList.filter(se => se.ID == seatCounterUnique) : null;
+
+                //
+                var st = new Seat(
+                    //(currentSeat != null && currentSeat[0].SeatClass == 4 && isIgnoreGaps) ? null : seatCounter,
+                    seatCounter,
+                    this.basePositionCordinate * r, this.basePositionCordinate * (columnCount- c-1),
+                    currentSeat != null ? currentSeat[0].SeatClass : 1, seatCounterUnique);
+                SeatList.push(st);
+                seatCounterUnique++;
+                if (st.SeatClass == 4 && isIgnoreGaps) {
+
+                }
+                else {
+                    seatCounter++;
+                }
+            }
+            Container.push(SeatList.reverse());
         }
         return Container;
     }
@@ -59,7 +140,7 @@ export class SortService implements ISortService {
             var SeatList: Seat[] = [];
             var currentNo = seatCounter;
             for (var c = columnCount; c > 0; c--) {
-                var st = new Seat(Number(currentNo) + Number(c) - 1, this.basePositionCordinate * (rowCount- r),this.basePositionCordinate * (columnCount-c), 1);
+                var st = new Seat(Number(currentNo) + Number(c) - 1, this.basePositionCordinate * (rowCount - 1 - r), this.basePositionCordinate * (columnCount - c), 1, seatCounter);
                 SeatList.push(st);
                 seatCounter++;
             }
@@ -75,7 +156,7 @@ export class SortService implements ISortService {
             var SeatList: Seat[] = [];
             if (isReversSort == false) {
                 for (var c = 0; c < columnCount; c++) {
-                    var st = new Seat(seatCounter, this.basePositionCordinate * r, this.basePositionCordinate * c, 1);
+                    var st = new Seat(seatCounter, this.basePositionCordinate * r, this.basePositionCordinate * c, 1, seatCounter);
                     SeatList.push(st);
                     seatCounter++;
                 }
@@ -88,7 +169,7 @@ export class SortService implements ISortService {
                     //console.log("count" + columnCount);
                     //console.log("currentNo" + currentNo);
 
-                    var st = new Seat(Number(currentNo) + Number(c) - 1, this.basePositionCordinate * r, this.basePositionCordinate * (columnCount-c), 1);
+                    var st = new Seat(Number(currentNo) + Number(c) - 1, this.basePositionCordinate * r, this.basePositionCordinate * (columnCount - c), 1, seatCounter);
                     SeatList.push(st);
                     seatCounter++;
                 }
@@ -106,7 +187,7 @@ export class SortService implements ISortService {
             var SeatList: Seat[] = [];
             if (isReversSort == false) {
                 for (var c = 0; c < columnCount; c++) {
-                    var st = new Seat(seatCounter, this.basePositionCordinate * (rowCount- r), this.basePositionCordinate *  c, 1);
+                    var st = new Seat(seatCounter, this.basePositionCordinate * (rowCount - r - 1), this.basePositionCordinate * c, 1, seatCounter);
                     SeatList.push(st);
                     seatCounter++;
                 }
@@ -119,7 +200,7 @@ export class SortService implements ISortService {
                     //console.log("count" + columnCount);
                     //console.log("currentNo" + currentNo);
 
-                    var st = new Seat(Number(currentNo) + Number(c) - 1, this.basePositionCordinate * (rowCount-r), this.basePositionCordinate * (columnCount-c), 1);
+                    var st = new Seat(Number(currentNo) + Number(c) - 1, this.basePositionCordinate * (rowCount - r - 1), this.basePositionCordinate * (columnCount - c), 1, seatCounter);
                     SeatList.push(st);
                     seatCounter++;
                 }
@@ -137,7 +218,7 @@ export class SortService implements ISortService {
             var SeatList: Seat[] = [];
             if (isReversSort == false) {
                 for (var c = 0; c < columnCount; c++) {
-                    var st = new Seat(seatCounter, this.basePositionCordinate * r, this.basePositionCordinate * c, 1);
+                    var st = new Seat(seatCounter, this.basePositionCordinate * r, this.basePositionCordinate * c, 1, seatCounter);
                     SeatList.push(st);
                     seatCounter++;
                 }
@@ -150,7 +231,7 @@ export class SortService implements ISortService {
                     //console.log("count" + columnCount);
                     //console.log("currentNo" + currentNo);
 
-                    var st = new Seat(Number(currentNo) + Number(c) - 1, this.basePositionCordinate * r, this.basePositionCordinate * (columnCount-c), 1);
+                    var st = new Seat(Number(currentNo) + Number(c) - 1, this.basePositionCordinate * r, this.basePositionCordinate * (columnCount - c), 1, seatCounter);
                     SeatList.push(st);
                     seatCounter++;
                 }
@@ -168,7 +249,7 @@ export class SortService implements ISortService {
             var SeatList: Seat[] = [];
             if (isReversSort == false) {
                 for (var c = 0; c < columnCount; c++) {
-                    var st = new Seat(seatCounter, this.basePositionCordinate * (rowCount- r), this.basePositionCordinate * c, 1);
+                    var st = new Seat(seatCounter, this.basePositionCordinate * (rowCount - r - 1), this.basePositionCordinate * c, 1, seatCounter);
                     SeatList.push(st);
                     seatCounter++;
                 }
@@ -181,7 +262,7 @@ export class SortService implements ISortService {
                     //console.log("count" + columnCount);
                     //console.log("currentNo" + currentNo);
 
-                    var st = new Seat(Number(currentNo) + Number(c) - 1, this.basePositionCordinate * (rowCount-r), this.basePositionCordinate * (columnCount-c), 1);
+                    var st = new Seat(Number(currentNo) + Number(c) - 1, this.basePositionCordinate * (rowCount - r - 1), this.basePositionCordinate * (columnCount - c), 1, seatCounter);
                     SeatList.push(st);
                     seatCounter++;
                 }
