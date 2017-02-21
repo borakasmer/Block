@@ -57,7 +57,7 @@ export class AppComponent {
         }
       case "Soldan Sağ Aşağıdan Başla":
         {
-          this.Container = this.sortService.SortLeftToRightFromDown(this.rowCount, this.columnCount);
+          this.Container = this.sortService.SortLeftToRightFromDown(this.rowCount, this.columnCount,currentList,isIgnoreGaps);
           break;
         }
       case "Sağdan Sola Aşağıdan Başla":
@@ -74,7 +74,7 @@ export class AppComponent {
   }
   seatType = SeatStatus;
 
-  BuySeat(seat: Seat) {
+  BuySeat(seat: Seat) {    
     if (seat.SeatClass == 1) {
       switch (this.selectedSeatType) {
         case 1: {

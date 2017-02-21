@@ -40,15 +40,31 @@ export class SortService implements ISortService {
         }
         return Container;
     }
-    SortLeftToRightFromDown(rowCount: number, columnCount: number) {
+    SortLeftToRightFromDown(rowCount: number, columnCount: number, currentList?: Seat[], isIgnoreGaps?: boolean) {
         var Container = [];
         var seatCounter = 1;
+        var seatCounterUnique = 1;
+
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
             for (var c = 0; c < columnCount; c++) {
-                var st = new Seat(seatCounter, this.basePositionCordinate * (rowCount - 1 - r), this.basePositionCordinate * c, 1, seatCounter);
+
+                //Eklenecek koltuğun eski durumu var mı diye bakılır? Varsa  var olan güncel hali alınır.
+                var currentSeat = currentList != null && currentList != undefined ?
+                    currentList.filter(se => se.ID == seatCounterUnique) : null;
+
+                //
+
+                var st = new Seat(seatCounter, this.basePositionCordinate * (rowCount - 1 - r), this.basePositionCordinate * c,
+                    currentSeat != null ? currentSeat[0].SeatClass : 1, seatCounterUnique);
                 SeatList.push(st);
-                seatCounter++;
+                seatCounterUnique++;
+                if (st.SeatClass == 4 && isIgnoreGaps) {
+
+                }
+                else {
+                    seatCounter++;
+                }
             }
             Container.push(SeatList);
         }
@@ -118,7 +134,7 @@ export class SortService implements ISortService {
                 var st = new Seat(
                     //(currentSeat != null && currentSeat[0].SeatClass == 4 && isIgnoreGaps) ? null : seatCounter,
                     seatCounter,
-                    this.basePositionCordinate * r, this.basePositionCordinate * (columnCount- c-1),
+                    this.basePositionCordinate * r, this.basePositionCordinate * (columnCount - c - 1),
                     currentSeat != null ? currentSeat[0].SeatClass : 1, seatCounterUnique);
                 SeatList.push(st);
                 seatCounterUnique++;

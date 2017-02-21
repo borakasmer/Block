@@ -26,7 +26,9 @@ export class SeatComponent implements OnInit
 
     @Input() set ContainerSeat(container) { this._ContainerSeat = container; }    
     @Output() clickSeat:EventEmitter<Seat>=new EventEmitter<Seat>();
-    TriggerEvent(seat) { this.clickSeat.emit(seat); }
+    TriggerEvent(seat) { 
+        this.clickSeat.emit(seat); 
+    }
     
     ngOnInit() 
     { 
@@ -77,8 +79,8 @@ export class SeatComponent implements OnInit
     onMouseUp(event: MouseEvent):void 
     {
         console.log(this.startCoordinate);
-        console.log(this.endCoordinate);
-        if(this.startCoordinate)
+        //console.log(this.endCoordinate);
+        if(this.startCoordinate && this.endCoordinate)
         {
             if(event.clientX < this.startCoordinate.X)
             {
@@ -92,7 +94,7 @@ export class SeatComponent implements OnInit
 
             this._ContainerSeat.forEach(row => {
                 row.forEach(rowseat => {
-                        console.log(rowseat);
+                        //console.log(rowseat);
                         if((rowseat.Top + this.containerY + 50) > this.startCoordinate.Y 
                             && (rowseat.Left + this.containerX + 25) > this.startCoordinate.X 
                             && (rowseat.Top + this.containerY + 50) < this.endCoordinate.Y 

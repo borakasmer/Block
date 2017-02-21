@@ -1,7 +1,6 @@
 #block-seat-container
 {
     position: relative; 
-    z-index: 90;
     margin-top:30px; 
     -webkit-touch-callout: none; 
     -webkit-user-select: none; 
@@ -26,6 +25,7 @@
     padding-top: 10px; 
     position: absolute;
     border:1px solid #dbe9fc;
+    z-index: 100;
 }
 
 
