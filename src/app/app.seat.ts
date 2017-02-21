@@ -14,25 +14,32 @@ export class SeatComponent implements OnInit
 
     private _ContainerSeat=[];
     private event: MouseEvent;
-
-    private clientX:number = 0;
-    private clientY:number = 0;
-
-    startSelect:string = 'none';
-    startCoordinate:Coordinate;
-
+    private containerX:number = 0;
+    private containerY:number = 0;
+    private startSelect:string = 'none';
+    public startCoordinate:Coordinate;
+    public endCoordinate:Coordinate;
+    
+    @ViewChild('blockseatcontainer') private blockseatcontainerElement: ElementRef; 
     @ViewChild('resizable') private resizableElement: ElementRef; 
     private resizable: any;   
 
     @Input() set ContainerSeat(container) { this._ContainerSeat = container; }    
     @Output() clickSeat:EventEmitter<Seat>=new EventEmitter<Seat>();
-
-    ngOnInit() { this.resizable = this.resizableElement.nativeElement; }
     TriggerEvent(seat) { this.clickSeat.emit(seat); }
-    onMouseEnter(event: MouseEvent): void { this.event = event; }
+    
+    ngOnInit() 
+    { 
+        this.resizable = this.resizableElement.nativeElement; 
+        this.containerX = this.blockseatcontainerElement.nativeElement.offsetLeft;
+        this.containerY = this.blockseatcontainerElement.nativeElement.offsetTop;        
+    }
 
-    onMouseDown(event: MouseEvent): void 
-    {
+    onMouseEnter(event: MouseEvent): void { 
+        this.event = event; 
+    }
+
+    onMouseDown(event: MouseEvent): void {
         this.startSelect = 'block';
         this.startCoordinate = new Coordinate(event.clientX, event.clientY);
         this.renderer.setElementStyle(this.resizable, 'left', event.clientX + "px");
@@ -66,6 +73,38 @@ export class SeatComponent implements OnInit
         }
             
     }  
+
+    onMouseUp(event: MouseEvent):void 
+    {
+        console.log(this.startCoordinate);
+        console.log(this.endCoordinate);
+        if(this.startCoordinate)
+        {
+            if(event.clientX < this.startCoordinate.X)
+            {
+                this.endCoordinate = this.startCoordinate;
+                this.startCoordinate = new Coordinate(event.clientX, event.clientY);
+            }
+            else
+            {
+                this.endCoordinate = new Coordinate(event.clientX, event.clientY);
+            }
+
+            this._ContainerSeat.forEach(row => {
+                row.forEach(rowseat => {
+                        console.log(rowseat);
+                        if((rowseat.Top + this.containerY + 50) > this.startCoordinate.Y 
+                            && (rowseat.Left + this.containerX + 25) > this.startCoordinate.X 
+                            && (rowseat.Top + this.containerY + 50) < this.endCoordinate.Y 
+                            && (rowseat.Left + this.containerX + 25) < this.endCoordinate.X)
+                        {
+                            console.log(rowseat.RowNumber);
+                            this.TriggerEvent(rowseat);
+                        } 
+                });
+            });
+        }
+    }     
 
     onMouseLeave(event: MouseEvent):void {
         this.renderer.setElementStyle(this.resizable, 'display','none');
