@@ -180,7 +180,7 @@ export class SortService implements ISortService {
                 var st = new Seat(
                     //(currentSeat != null && currentSeat[0].SeatClass == 4 && isIgnoreGaps) ? null : seatCounter,
                     seatCounter,
-                    this.basePositionCordinate *  (rowCount - 1 - r), this.basePositionCordinate * (columnCount - c - 1),
+                    this.basePositionCordinate * (rowCount - 1 - r), this.basePositionCordinate * (columnCount - c - 1),
                     currentSeat != null ? currentSeat[0].SeatClass : 1, seatCounterUnique);
                 SeatList.push(st);
                 seatCounterUnique++;
@@ -195,7 +195,7 @@ export class SortService implements ISortService {
         }
         return Container.reverse();
     }
-    SortSnakeLeftToRight(rowCount: number, columnCount: number) {
+    /*SortSnakeLeftToRight(rowCount: number, columnCount: number) {
         var isReversSort = false;
         var Container = [];
         var seatCounter = 1;
@@ -225,8 +225,68 @@ export class SortService implements ISortService {
             Container.push(SeatList);
         }
         return Container;
+    }*/
+    SortSnakeLeftToRight(rowCount: number, columnCount: number, currentList?: Seat[], isIgnoreGaps?: boolean) {
+        var isReversSort = false;
+        var Container = [];
+        var seatCounter = 1;
+        var seatCounterUnique = 1;
+
+        for (var r = 0; r < rowCount; r++) {
+            var SeatList: Seat[] = [];
+            if (isReversSort == false) {
+                for (var c = 0; c < columnCount; c++) {
+
+                    //Eklenecek koltuğun eski durumu var mı diye bakılır? Varsa var olan güncel hali alınır.
+                    var currentSeat = currentList != null && currentList != undefined ?
+                        currentList.filter(se => se.ID == seatCounterUnique) : null;
+
+                    var st = new Seat(seatCounter, this.basePositionCordinate * r, this.basePositionCordinate * c,
+                        currentSeat != null ? currentSeat[0].SeatClass : 1, seatCounterUnique);
+                    SeatList.push(st);
+                    seatCounterUnique++;
+                    if (st.SeatClass == 4 && isIgnoreGaps) {
+
+                    }
+                    else {
+                        seatCounter++;
+                    }
+                }
+                isReversSort = true;
+            }
+            else if (isReversSort == true) {
+                var currentNo = seatCounter;
+                for (var c = 0; c < columnCount; c++) {
+
+                    //Eklenecek koltuğun eski durumu var mı diye bakılır? Varsa var olan güncel hali alınır.
+                    var currentSeat = currentList != null && currentList != undefined ?
+                        currentList.filter(se => se.ID == seatCounterUnique) : null;
+
+                    var st = new Seat(seatCounter,
+                        this.basePositionCordinate * r, this.basePositionCordinate * (columnCount - c - 1),
+                        currentSeat != null ? currentSeat[0].SeatClass : 1, seatCounterUnique);
+
+                    SeatList.push(st);
+                    seatCounterUnique++;
+                    if (st.SeatClass == 4 && isIgnoreGaps) {
+
+                    }
+                    else {
+                        seatCounter++;
+                    }
+                }
+                isReversSort = false;
+            }
+            if (isReversSort) {
+                Container.push(SeatList);
+            }
+            else {
+                Container.push(SeatList.reverse());
+            }
+        }
+        return Container;
     }
-    SortSnakeLeftToRightFromDown(rowCount: number, columnCount: number) {
+    /*SortSnakeLeftToRightFromDown(rowCount: number, columnCount: number) {
         var isReversSort = false;
         var Container = [];
         var seatCounter = 1;
@@ -256,8 +316,68 @@ export class SortService implements ISortService {
             Container.push(SeatList);
         }
         return Container.reverse();
+    }*/
+    SortSnakeLeftToRightFromDown(rowCount: number, columnCount: number, currentList?: Seat[], isIgnoreGaps?: boolean) {
+        var isReversSort = false;
+        var Container = [];
+        var seatCounter = 1;
+        var seatCounterUnique = 1;
+
+        for (var r = 0; r < rowCount; r++) {
+            var SeatList: Seat[] = [];
+            if (isReversSort == false) {
+                for (var c = 0; c < columnCount; c++) {
+
+                    //Eklenecek koltuğun eski durumu var mı diye bakılır? Varsa var olan güncel hali alınır.
+                    var currentSeat = currentList != null && currentList != undefined ?
+                        currentList.filter(se => se.ID == seatCounterUnique) : null;
+
+                    var st = new Seat(seatCounter, this.basePositionCordinate *  (rowCount - 1 - r), this.basePositionCordinate * c,
+                        currentSeat != null ? currentSeat[0].SeatClass : 1, seatCounterUnique);
+                    SeatList.push(st);
+                    seatCounterUnique++;
+                    if (st.SeatClass == 4 && isIgnoreGaps) {
+
+                    }
+                    else {
+                        seatCounter++;
+                    }
+                }
+                isReversSort = true;
+            }
+            else if (isReversSort == true) {
+                var currentNo = seatCounter;
+                for (var c = 0; c < columnCount; c++) {
+
+                    //Eklenecek koltuğun eski durumu var mı diye bakılır? Varsa var olan güncel hali alınır.
+                    var currentSeat = currentList != null && currentList != undefined ?
+                        currentList.filter(se => se.ID == seatCounterUnique) : null;
+
+                    var st = new Seat(seatCounter,
+                        this.basePositionCordinate  * (rowCount - 1 - r), this.basePositionCordinate * (columnCount - c - 1),
+                        currentSeat != null ? currentSeat[0].SeatClass : 1, seatCounterUnique);
+
+                    SeatList.push(st);
+                    seatCounterUnique++;
+                    if (st.SeatClass == 4 && isIgnoreGaps) {
+
+                    }
+                    else {
+                        seatCounter++;
+                    }
+                }
+                isReversSort = false;
+            }
+            if (isReversSort) {
+                Container.push(SeatList);
+            }
+            else {
+                Container.push(SeatList.reverse());
+            }
+        }
+        return Container.reverse();
     }
-    SortSnakeRightToLeft(rowCount: number, columnCount: number) {
+    /*SortSnakeRightToLeft(rowCount: number, columnCount: number) {
         var isReversSort = true;
         var Container = [];
         var seatCounter = 1;
@@ -287,8 +407,68 @@ export class SortService implements ISortService {
             Container.push(SeatList);
         }
         return Container;
+    }*/
+    SortSnakeRightToLeft(rowCount: number, columnCount: number, currentList?: Seat[], isIgnoreGaps?: boolean) {
+        var isReversSort = true;
+        var Container = [];
+        var seatCounter = 1;
+        var seatCounterUnique = 1;
+
+        for (var r = 0; r < rowCount; r++) {
+            var SeatList: Seat[] = [];
+            if (isReversSort == false) {
+                for (var c = 0; c < columnCount; c++) {
+
+                    //Eklenecek koltuğun eski durumu var mı diye bakılır? Varsa var olan güncel hali alınır.
+                    var currentSeat = currentList != null && currentList != undefined ?
+                        currentList.filter(se => se.ID == seatCounterUnique) : null;
+
+                    var st = new Seat(seatCounter, this.basePositionCordinate * r, this.basePositionCordinate * c,
+                        currentSeat != null ? currentSeat[0].SeatClass : 1, seatCounterUnique);
+                    SeatList.push(st);
+                    seatCounterUnique++;
+                    if (st.SeatClass == 4 && isIgnoreGaps) {
+
+                    }
+                    else {
+                        seatCounter++;
+                    }
+                }
+                isReversSort = true;
+            }
+            else if (isReversSort == true) {
+                var currentNo = seatCounter;
+                for (var c = 0; c < columnCount; c++) {
+
+                    //Eklenecek koltuğun eski durumu var mı diye bakılır? Varsa var olan güncel hali alınır.
+                    var currentSeat = currentList != null && currentList != undefined ?
+                        currentList.filter(se => se.ID == seatCounterUnique) : null;
+
+                    var st = new Seat(seatCounter,
+                        this.basePositionCordinate * r, this.basePositionCordinate * (columnCount - c - 1),
+                        currentSeat != null ? currentSeat[0].SeatClass : 1, seatCounterUnique);
+
+                    SeatList.push(st);
+                    seatCounterUnique++;
+                    if (st.SeatClass == 4 && isIgnoreGaps) {
+
+                    }
+                    else {
+                        seatCounter++;
+                    }
+                }
+                isReversSort = false;
+            }
+            if (isReversSort) {
+                Container.push(SeatList);
+            }
+            else {
+                Container.push(SeatList.reverse());
+            }
+        }
+        return Container;
     }
-    SortSnakeRightToLeftFromDown(rowCount: number, columnCount: number) {
+   /* SortSnakeRightToLeftFromDown(rowCount: number, columnCount: number) {
         var isReversSort = true;
         var Container = [];
         var seatCounter = 1;
@@ -316,6 +496,66 @@ export class SortService implements ISortService {
                 isReversSort = false;
             }
             Container.push(SeatList);
+        }
+        return Container.reverse();
+    }*/
+    SortSnakeRightToLeftFromDown(rowCount: number, columnCount: number, currentList?: Seat[], isIgnoreGaps?: boolean) {
+        var isReversSort = true;
+        var Container = [];
+        var seatCounter = 1;
+        var seatCounterUnique = 1;
+
+        for (var r = 0; r < rowCount; r++) {
+            var SeatList: Seat[] = [];
+            if (isReversSort == false) {
+                for (var c = 0; c < columnCount; c++) {
+
+                    //Eklenecek koltuğun eski durumu var mı diye bakılır? Varsa var olan güncel hali alınır.
+                    var currentSeat = currentList != null && currentList != undefined ?
+                        currentList.filter(se => se.ID == seatCounterUnique) : null;
+
+                    var st = new Seat(seatCounter, this.basePositionCordinate *  (rowCount - 1 - r), this.basePositionCordinate * c,
+                        currentSeat != null ? currentSeat[0].SeatClass : 1, seatCounterUnique);
+                    SeatList.push(st);
+                    seatCounterUnique++;
+                    if (st.SeatClass == 4 && isIgnoreGaps) {
+
+                    }
+                    else {
+                        seatCounter++;
+                    }
+                }
+                isReversSort = true;
+            }
+            else if (isReversSort == true) {
+                var currentNo = seatCounter;
+                for (var c = 0; c < columnCount; c++) {
+
+                    //Eklenecek koltuğun eski durumu var mı diye bakılır? Varsa var olan güncel hali alınır.
+                    var currentSeat = currentList != null && currentList != undefined ?
+                        currentList.filter(se => se.ID == seatCounterUnique) : null;
+
+                    var st = new Seat(seatCounter,
+                        this.basePositionCordinate  * (rowCount - 1 - r), this.basePositionCordinate * (columnCount - c - 1),
+                        currentSeat != null ? currentSeat[0].SeatClass : 1, seatCounterUnique);
+
+                    SeatList.push(st);
+                    seatCounterUnique++;
+                    if (st.SeatClass == 4 && isIgnoreGaps) {
+
+                    }
+                    else {
+                        seatCounter++;
+                    }
+                }
+                isReversSort = false;
+            }
+            if (isReversSort) {
+                Container.push(SeatList);
+            }
+            else {
+                Container.push(SeatList.reverse());
+            }
         }
         return Container.reverse();
     }
