@@ -101,10 +101,13 @@ export class AppComponent {
           //Amaç: Servisde herbiri gezilerek eski durumları korunur.
           var currentList = [];
           for (var i = 0; i < this.Container.length; i++) {
+            currentList = currentList.concat(this.Container[i]);
+          }
+          /*for (var i = 0; i < this.Container.length; i++) {
             this.Container[i].forEach(seatItem => {
               currentList.push(seatItem);
             });
-          }
+          }*/
           //this.Container = this.sortService.SortLeftToRight(this.rowCount, this.columnCount, currentList, this.isIgnoreGaps);
           this.DrawSeats(currentList, this.isIgnoreGaps);
           break;
@@ -122,10 +125,13 @@ export class AppComponent {
       //Amaç: Servisde herbiri gezilerek eski durumları korunur.
       var currentList = [];
       for (var i = 0; i < this.Container.length; i++) {
+        currentList = currentList.concat(this.Container[i]);
+      }
+      /*for (var i = 0; i < this.Container.length; i++) {
         this.Container[i].forEach(seatItem => {
           currentList.push(seatItem);
         });
-      }
+      }*/
       //this.Container = this.sortService.SortLeftToRight(this.rowCount, this.columnCount, currentList, this.isIgnoreGaps);
       this.DrawSeats(currentList, this.isIgnoreGaps);
     }
