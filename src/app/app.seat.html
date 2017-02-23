@@ -1,4 +1,9 @@
-<div #blockseatcontainer id="block-seat-container" (mouseenter)="onMouseEnter($event)" (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave($event)" (mouseup)="onMouseUp($event)">
+<div #blockseatcontainer id="block-seat-container" 
+                         (mouseenter)="onMouseEnter($event)" 
+                         (mousedown)="onMouseDown($event)" 
+                         (mousemove)="onMouseMove($event)" 
+                         (mouseleave)="onMouseLeave($event)" 
+                         (mouseup)="onMouseUp($event)">
     <div class="seat-row" *ngFor="let row of _ContainerSeat">
         <div class="seat" *ngFor="let seat of row" (click)="TriggerEvent(seat)" 
             [style.top.px]="seat.Top" 

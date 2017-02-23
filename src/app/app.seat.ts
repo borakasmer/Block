@@ -42,13 +42,16 @@ export class SeatComponent implements OnInit {
     onMouseDown(event: MouseEvent): void {
         this.startSelect = 'block';
         this.startCoordinate = new Coordinate(event.clientX, event.clientY);
-        this.renderer.setElementStyle(this.resizable, 'left', event.clientX + "px");
-        this.renderer.setElementStyle(this.resizable, 'top', event.clientY + "px");
+        if(event.shiftKey)
+        {
+            this.renderer.setElementStyle(this.resizable, 'left', event.clientX + "px");
+            this.renderer.setElementStyle(this.resizable, 'top', event.clientY + "px");
+        }
     }
 
     onMouseMove(event: MouseEvent): void {
         if (this.startCoordinate) {
-            if (event.buttons === 1) {
+            if (event.buttons === 1 && event.shiftKey) {
                 this.renderer.setElementStyle(this.resizable, 'display', 'block');
                 if (event.clientX < this.startCoordinate.X) {
                     this.renderer.setElementStyle(this.resizable, 'width', this.startCoordinate.X - event.clientX + "px");
@@ -69,9 +72,7 @@ export class SeatComponent implements OnInit {
     }
 
     onMouseUp(event: MouseEvent): void {
-        console.log(this.startCoordinate);
         this.endCoordinate = new Coordinate(event.clientX, event.clientY);
-        //console.log(this.endCoordinate);
         if (this.startCoordinate && this.endCoordinate) {
             if (event.clientX < this.startCoordinate.X) {
                 this.endCoordinate = this.startCoordinate;
@@ -81,16 +82,15 @@ export class SeatComponent implements OnInit {
                 this.endCoordinate = new Coordinate(event.clientX, event.clientY);
             }
 
-            this._ContainerSeat.forEach(row => {
-                row.forEach(rowseat => {
-                    //console.log(rowseat);
-                    if ((rowseat.Top + this.containerY + 50) > this.startCoordinate.Y
-                        && (rowseat.Left + this.containerX + 25) > this.startCoordinate.X
-                        && (rowseat.Top + this.containerY + 50) < this.endCoordinate.Y
-                        && (rowseat.Left + this.containerX + 25) < this.endCoordinate.X) {
-                        console.log(rowseat.RowNumber);
-                        this.TriggerEvent(rowseat);
-                    }
+            if(event.shiftKey)
+                this._ContainerSeat.forEach(row => {
+                    row.forEach(rowseat => {
+                        if ((rowseat.Top + this.containerY + 50) > this.startCoordinate.Y
+                            && (rowseat.Left + this.containerX + 25) > this.startCoordinate.X
+                            && (rowseat.Top + this.containerY + 50) < this.endCoordinate.Y
+                            && (rowseat.Left + this.containerX + 25) < this.endCoordinate.X) {
+                            this.TriggerEvent(rowseat);
+                        }
                 });
             });
         }
