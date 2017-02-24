@@ -62,7 +62,7 @@ export class AppComponent {
         }
       case "Sağdan Sola Aşağıdan Başla":
         {
-          this.Container = this.sortService.SortRightToLeftFormDown(this.rowCount, this.columnCount, currentList, isIgnoreGaps);
+          this.Container = this.sortService.SortRightToLeftFromDown(this.rowCount, this.columnCount, currentList, isIgnoreGaps);
           //this.Container = this.sortService.SortRightToLeftFormDown(this.rowCount, this.columnCount);
           break;
         }
@@ -121,19 +121,21 @@ export class AppComponent {
       seat.Src = "../assets/Images/green.png";
       seat.SeatClass = 1;
 
-      //2li dizi içerisindeki tüm koltuklar(seat)ler tek bir diziye atanır.
-      //Amaç: Servisde herbiri gezilerek eski durumları korunur.
-      var currentList = [];
-      for (var i = 0; i < this.Container.length; i++) {
-        currentList = currentList.concat(this.Container[i]);
+      if (triggerSort) {
+        //2li dizi içerisindeki tüm koltuklar(seat)ler tek bir diziye atanır.
+        //Amaç: Servisde herbiri gezilerek eski durumları korunur.
+        var currentList = [];
+        for (var i = 0; i < this.Container.length; i++) {
+          currentList = currentList.concat(this.Container[i]);
+        }
+        /*for (var i = 0; i < this.Container.length; i++) {
+          this.Container[i].forEach(seatItem => {
+            currentList.push(seatItem);
+          });
+        }*/
+        //this.Container = this.sortService.SortLeftToRight(this.rowCount, this.columnCount, currentList, this.isIgnoreGaps);
+        this.DrawSeats(currentList, this.isIgnoreGaps);
       }
-      /*for (var i = 0; i < this.Container.length; i++) {
-        this.Container[i].forEach(seatItem => {
-          currentList.push(seatItem);
-        });
-      }*/
-      //this.Container = this.sortService.SortLeftToRight(this.rowCount, this.columnCount, currentList, this.isIgnoreGaps);
-      this.DrawSeats(currentList, this.isIgnoreGaps);
     }
   }
 }
