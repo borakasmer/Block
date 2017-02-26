@@ -12,7 +12,6 @@ import { Coordinate } from '../Models/Coordinate';
 
 export class SeatComponent implements OnInit {
     constructor(private renderer: Renderer, @Inject(DOCUMENT) private document: Document) { }
-
     private _ContainerSeat = [];
     private event: MouseEvent;
     private containerX: number = 0;
@@ -44,7 +43,7 @@ export class SeatComponent implements OnInit {
     ngOnInit() {
         this.resizable = this.resizableElement.nativeElement;
         this.containerX = this.blockseatcontainerElement.nativeElement.offsetLeft;
-        this.containerY = this.blockseatcontainerElement.nativeElement.offsetTop;
+        this.containerY = this.blockseatcontainerElement.nativeElement.offsetTop + 35;
     }
 
     onMouseEnter(event: MouseEvent): void {
@@ -54,8 +53,11 @@ export class SeatComponent implements OnInit {
 
     onMouseDown(event: MouseEvent): void 
     {
-        let startX: number = (event.clientX - this.containerX) < 0 ?  -(event.clientX - this.containerX) + this.scrollLeft : event.clientX - this.containerX + this.scrollLeft;
-        let startY: number = (event.clientY - this.containerY) < 0 ?  -(event.clientY - this.containerY) + this.scrollTop : event.clientY - this.containerY + this.scrollTop;   
+        //let startX: number = (event.clientX - this.containerX) < 0 ?  -(event.clientX - this.containerX) + this.scrollLeft : event.clientX - this.containerX + this.scrollLeft;
+        //let startY: number = (event.clientY - this.containerY) < 0 ?  -(event.clientY - this.containerY) + this.scrollTop : event.clientY - this.containerY + this.scrollTop;   
+
+        let startX: number = (event.clientX - this.containerX) < 0 ?  -(event.clientX - this.containerX) : event.clientX - this.containerX;
+        let startY: number = (event.clientY - this.containerY) < 0 ?  -(event.clientY - this.containerY) : event.clientY - this.containerY;  
 
         if(this.isOnContainer){
             if(event.shiftKey){
@@ -86,16 +88,23 @@ export class SeatComponent implements OnInit {
                 */
 
                 if(this.document.body.scrollHeight > 0) startX += 10;
-                if(startX < 20) startX = 0;
-                this.startCoordinate = new Coordinate(startX, startY);             
+
+                if(this.scrollLeft > 0)
+                    if(startX > this.scrollLeft) startX += this.scrollLeft; else startX = event.clientX - this.containerX + this.scrollLeft;
+
+                if(this.scrollTop > 0)
+                    if(startY > this.scrollTop) startY += this.scrollTop; else startY = event.clientY - this.containerY + this.scrollTop;
+
+                if(startX < 20) startX = 0; 
+                this.startCoordinate = new Coordinate(startX, startY);
             }
         }
     }
 
     onMouseMove(event: MouseEvent): void 
     {
-        let endX: number = (event.clientX - this.containerX) < 0 ?  (event.clientX - this.containerX) + this.scrollLeft : event.clientX - this.containerX + this.scrollLeft;; 
-        let endY: number = (event.clientY - this.containerY) < 0 ?  -(event.clientY - this.containerY) + this.scrollTop : event.clientY - this.containerY + this.scrollTop; 
+        let endX: number = (event.clientX - this.containerX) < 0 ? -(event.clientX - this.containerX) : event.clientX - this.containerX; 
+        let endY: number = (event.clientY - this.containerY) < 0 ? -(event.clientY - this.containerY) : event.clientY - this.containerY;
 
         if(this.isOnContainer){
             if (this.startCoordinate){
@@ -128,22 +137,27 @@ export class SeatComponent implements OnInit {
                         endY = (event.clientY - this.containerY) < 0 ?  -(event.clientY - this.containerY) + this.scrollTop : event.clientY - this.containerY + this.scrollTop;
                     }
 */
+                if(this.scrollLeft > 0)
+                    if(endX > this.scrollLeft) endX += this.scrollLeft; else endX = event.clientX - this.containerX + this.scrollLeft;
+
+                if(this.scrollTop > 0)
+                    if(endY > this.scrollTop) endY += this.scrollTop; else endY = event.clientY - this.containerY + this.scrollTop;
 
                     this.endCoordinate = new Coordinate(endX, endY); 
 
                     //From right down to left up
                     if(this.startCoordinate.X > this.endCoordinate.X && this.startCoordinate.Y > this.endCoordinate.Y){
-                        this.renderer.setElementStyle(this.resizable, 'left', (this.endCoordinate.X) + "px");
-                        this.renderer.setElementStyle(this.resizable, 'top', (this.endCoordinate.Y - 35) + "px");                        
-                        this.renderer.setElementStyle(this.resizable, 'width', (this.startCoordinate.X - this.endCoordinate.X) + "px");
-                        this.renderer.setElementStyle(this.resizable, 'height', (this.startCoordinate.Y - this.endCoordinate.Y) + "px");  
+                        this.renderer.setElementStyle(this.resizable, 'left', this.endCoordinate.X + "px");
+                        this.renderer.setElementStyle(this.resizable, 'top', this.endCoordinate.Y + "px");                        
+                        this.renderer.setElementStyle(this.resizable, 'width', this.startCoordinate.X - this.endCoordinate.X + "px");
+                        this.renderer.setElementStyle(this.resizable, 'height', this.startCoordinate.Y - this.endCoordinate.Y + "px");  
                     }
                     
                     //From right up to left down
                     else if(this.startCoordinate.X > this.endCoordinate.X && this.startCoordinate.Y < this.endCoordinate.Y)
                     {
                         this.renderer.setElementStyle(this.resizable, 'left', this.endCoordinate.X + "px");
-                        this.renderer.setElementStyle(this.resizable, 'top', (this.startCoordinate.Y - 35) + "px");   
+                        this.renderer.setElementStyle(this.resizable, 'top', this.startCoordinate.Y + "px");   
                         this.renderer.setElementStyle(this.resizable, 'width', this.startCoordinate.X - this.endCoordinate.X + "px");
                         this.renderer.setElementStyle(this.resizable, 'height', this.endCoordinate.Y - this.startCoordinate.Y + "px");
                     }
@@ -152,19 +166,18 @@ export class SeatComponent implements OnInit {
                     else if(this.startCoordinate.X < this.endCoordinate.X && this.startCoordinate.Y > this.endCoordinate.Y)
                     {
                         this.renderer.setElementStyle(this.resizable, 'left', this.startCoordinate.X + "px");
-                        this.renderer.setElementStyle(this.resizable, 'top', this.endCoordinate.Y - 35 + "px");
+                        this.renderer.setElementStyle(this.resizable, 'top', this.endCoordinate.Y + "px");
                         this.renderer.setElementStyle(this.resizable, 'width', this.endCoordinate.X - this.startCoordinate.X + "px");
-                        this.renderer.setElementStyle(this.resizable, 'height', (this.startCoordinate.Y - this.endCoordinate.Y) + "px");
+                        this.renderer.setElementStyle(this.resizable, 'height', this.startCoordinate.Y - this.endCoordinate.Y + "px");
                     }
 
                     //From left up to right down 
                     else
                     {
-                        console.log("Left Up -> Right Down");
-                        this.renderer.setElementStyle(this.resizable, 'left', (this.startCoordinate.X) + "px");
-                        this.renderer.setElementStyle(this.resizable, 'top', (this.startCoordinate.Y - 35) + "px");                        
-                        this.renderer.setElementStyle(this.resizable, 'width', (this.endCoordinate.X - this.startCoordinate.X) + "px");
-                        this.renderer.setElementStyle(this.resizable, 'height', (this.endCoordinate.Y - this.startCoordinate.Y) + "px");
+                        this.renderer.setElementStyle(this.resizable, 'left', this.startCoordinate.X + "px");
+                        this.renderer.setElementStyle(this.resizable, 'top', this.startCoordinate.Y + "px");                        
+                        this.renderer.setElementStyle(this.resizable, 'width', this.endCoordinate.X - this.startCoordinate.X + "px");
+                        this.renderer.setElementStyle(this.resizable, 'height', this.endCoordinate.Y - this.startCoordinate.Y + "px");
                     }
                 }
                 else {
