@@ -46,8 +46,6 @@ export class SeatComponent implements OnInit {
         this.containerY = this.blockseatcontainerElement.nativeElement.offsetTop;
     }
 
-
-
     onMouseEnter(event: MouseEvent): void {
         this.event = event;
         this.isOnContainer = true;
@@ -164,7 +162,7 @@ export class SeatComponent implements OnInit {
                     }
                 }
                 else {
-                    this.SetResizableDefault();
+                    this.SetResizableRectangleToDefault();
                 }
             }
         }
@@ -191,17 +189,17 @@ export class SeatComponent implements OnInit {
                     });
                 });
 
-                this.SetResizableDefault();
+                this.SetResizableRectangleToDefault();
             }
         }
     }
 
     onMouseLeave(event: MouseEvent): void {
         this.isOnContainer = false;
-        this.SetResizableDefault();
+        this.SetResizableRectangleToDefault();
     }
 
-    private SetResizableDefault(): void
+    private SetResizableRectangleToDefault(): void
     {
         this.startCoordinate = new Coordinate(0,0);
         this.endCoordinate = new Coordinate(0,0);
