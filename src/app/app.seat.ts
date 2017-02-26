@@ -178,9 +178,6 @@ export class SeatComponent implements OnInit {
             {
                 this.startCoordinate = new Coordinate(this.resizableElement.nativeElement.offsetLeft, this.resizableElement.nativeElement.offsetTop);
                 this.endCoordinate = new Coordinate(this.startCoordinate.X + this.resizableElement.nativeElement.offsetWidth, this.startCoordinate.Y + this.resizableElement.nativeElement.offsetHeight);
-
-                console.log(this.startCoordinate);
-                console.log(this.endCoordinate);
                 if(event.shiftKey)
                     this._ContainerSeat.forEach(row => {
                         row.forEach(rowseat => {
