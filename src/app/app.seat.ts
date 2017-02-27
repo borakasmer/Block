@@ -29,10 +29,10 @@ export class SeatComponent implements OnInit {
 
     @Input() set ContainerSeat(container) { this._ContainerSeat = container; }
     @Output() clickSeat: EventEmitter<Seat[]> = new EventEmitter<Seat[]>();
-    TriggerEvent(selectedSeats) {
+    /*TriggerEvent(selectedSeats) {
         this.clickSeat.emit(selectedSeats);
-    }
-    /* @Output() clickSeat: EventEmitter<Seat> = new EventEmitter<Seat>();*/
+    }*/
+     /*@Output() clickSeat: EventEmitter<Seat> = new EventEmitter<Seat>();*/
 
     @HostListener("window:scroll", [])
     onWindowScroll() {
@@ -40,9 +40,9 @@ export class SeatComponent implements OnInit {
         this.scrollLeft = this.document.body.scrollLeft;
     }
 
-    /*TriggerEvent(seat) {
+    TriggerEvent(seat) {
         this.clickSeat.emit(seat);
-    }*/
+    }
 
     ngOnInit() {
         this.resizable = this.resizableElement.nativeElement;

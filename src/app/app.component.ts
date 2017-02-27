@@ -109,6 +109,7 @@ export class AppComponent {
             seat.SeatCssClass = "grey";
             seat.Src = "../assets/Images/gray.png";
             seat.SeatClass = 4;
+            isTriggerSort = true;
             break;
           }
         }
