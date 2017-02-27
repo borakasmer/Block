@@ -23,7 +23,9 @@
             [style.left.px]="seat.Left"
             [attr.top]="seat.Top" 
             [attr.left]="seat.Left">
-          <span class="seat-label" [ngClass]="seat.SeatCssClass" *ngIf="seat.SeatClass!=4">{{ seat.RowNumber }}</span>
+            <span class="seat-label" [ngClass]="seat.SeatCssClass">
+                <span *ngIf="seat.SeatClass!=4">{{ seat.RowNumber }}</span>
+            </span>
         </div>
     </div>
 
