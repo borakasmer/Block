@@ -90,15 +90,16 @@ export class SeatComponent implements OnInit {
                 }
                 */
 
-                if (this.document.body.scrollHeight > 0) startX += 10;
-
                 if (this.scrollLeft > 0)
                     if (startX > this.scrollLeft) startX += this.scrollLeft; else startX = event.clientX - this.containerX + this.scrollLeft;
 
                 if (this.scrollTop > 0)
                     if (startY > this.scrollTop) startY += this.scrollTop; else startY = event.clientY - this.containerY + this.scrollTop;
+                
+                if (this.document.body.scrollHeight > window.screen.height) startX += 10;
 
-                if (startX < 20) startX = 0;
+                //if (startX < 20) startX = 0; 
+
                 this.startCoordinate = new Coordinate(startX, startY);
             }
         }
@@ -111,40 +112,41 @@ export class SeatComponent implements OnInit {
         if (this.isOnContainer) {
             if (this.startCoordinate) {
                 if (event.buttons === 1 && event.shiftKey) {
-                    this.renderer.setElementStyle(this.resizable, 'display', 'block');
-                    if (this.document.body.scrollHeight > 0) endX += 10;
+                    //if (this.document.body.scrollHeight > 0) endX += 20;
 
                     /*
-                                        if(this.scrollTop == 0 && this.scrollLeft == 0)
-                                        {
-                                            endX = (event.clientX - this.containerX) < 0 ?  -(event.clientX - this.containerX) : event.clientX - this.containerX;
-                                            endY = (event.clientY - this.containerY) < 0 ?  -(event.clientY - this.containerY) : event.clientY - this.containerY;
-                                        }
-                    
-                                        if(this.scrollTop > 0 && this.scrollLeft == 0)
-                                        {
-                                            endX = (event.clientX - this.containerX) < 0 ?  -(event.clientX - this.containerX) : event.clientX - this.containerX;
-                                            endY = (event.clientY - this.containerY) < 0 ?  -(event.clientY - this.containerY) + this.scrollTop : event.clientY - this.containerY + this.scrollTop;
-                                        }
-                    
-                                        if(this.scrollTop == 0 && this.scrollLeft > 0)
-                                        {
-                                            endX = (event.clientX - this.containerX) < 0 ?  -(event.clientX - this.containerX) + this.scrollLeft : event.clientX - this.containerX + this.scrollLeft;
-                                            endY = (event.clientY - this.containerY) < 0 ?  -(event.clientY - this.containerY) : event.clientY - this.containerY;
-                                        }
-                    
-                                        if(this.scrollTop > 0 && this.scrollLeft > 0)
-                                        {
-                                            endX = (event.clientX - this.containerX) < 0 ?  -(event.clientX - this.containerX) + this.scrollLeft : event.clientX - this.containerX + this.scrollLeft;
-                                            endY = (event.clientY - this.containerY) < 0 ?  -(event.clientY - this.containerY) + this.scrollTop : event.clientY - this.containerY + this.scrollTop;
-                                        }
+                        if(this.scrollTop == 0 && this.scrollLeft == 0)
+                        {
+                            endX = (event.clientX - this.containerX) < 0 ?  -(event.clientX - this.containerX) : event.clientX - this.containerX;
+                            endY = (event.clientY - this.containerY) < 0 ?  -(event.clientY - this.containerY) : event.clientY - this.containerY;
+                        }
+    
+                        if(this.scrollTop > 0 && this.scrollLeft == 0)
+                        {
+                            endX = (event.clientX - this.containerX) < 0 ?  -(event.clientX - this.containerX) : event.clientX - this.containerX;
+                            endY = (event.clientY - this.containerY) < 0 ?  -(event.clientY - this.containerY) + this.scrollTop : event.clientY - this.containerY + this.scrollTop;
+                        }
+    
+                        if(this.scrollTop == 0 && this.scrollLeft > 0)
+                        {
+                            endX = (event.clientX - this.containerX) < 0 ?  -(event.clientX - this.containerX) + this.scrollLeft : event.clientX - this.containerX + this.scrollLeft;
+                            endY = (event.clientY - this.containerY) < 0 ?  -(event.clientY - this.containerY) : event.clientY - this.containerY;
+                        }
+    
+                        if(this.scrollTop > 0 && this.scrollLeft > 0)
+                        {
+                            endX = (event.clientX - this.containerX) < 0 ?  -(event.clientX - this.containerX) + this.scrollLeft : event.clientX - this.containerX + this.scrollLeft;
+                            endY = (event.clientY - this.containerY) < 0 ?  -(event.clientY - this.containerY) + this.scrollTop : event.clientY - this.containerY + this.scrollTop;
+                        }
                     */
                     if (this.scrollLeft > 0)
                         if (endX > this.scrollLeft) endX += this.scrollLeft; else endX = event.clientX - this.containerX + this.scrollLeft;
 
                     if (this.scrollTop > 0)
                         if (endY > this.scrollTop) endY += this.scrollTop; else endY = event.clientY - this.containerY + this.scrollTop;
-
+                    
+                    if (this.document.body.scrollHeight > window.screen.height) endX += 10;
+                    
                     this.endCoordinate = new Coordinate(endX, endY);
 
                     //From right down to left up
@@ -197,10 +199,8 @@ export class SeatComponent implements OnInit {
                 if (event.shiftKey)
                     this._ContainerSeat.forEach(row => {
                         row.forEach(rowseat => {
-                            if (rowseat.Top > this.startCoordinate.Y - 10
-                                && rowseat.Left > this.startCoordinate.X - 10
-                                && rowseat.Top < this.endCoordinate.Y
-                                && rowseat.Left < this.endCoordinate.X) {
+                            if (rowseat.Top > this.startCoordinate.Y - 25 && rowseat.Left > this.startCoordinate.X -25 && 
+                                rowseat.Top < this.endCoordinate.Y && rowseat.Left < this.endCoordinate.X) {
                                 selectedSeats.push(rowseat);
                             }
                         });
@@ -209,6 +209,7 @@ export class SeatComponent implements OnInit {
                 this.SetResizableRectangleToDefault();
             }
         }
+        this.startCoordinate = new Coordinate(0, 0);
     }
 
     onMouseLeave(event: MouseEvent): void {
@@ -217,7 +218,6 @@ export class SeatComponent implements OnInit {
     }
 
     private SetResizableRectangleToDefault(): void {
-        this.startCoordinate = new Coordinate(0, 0);
         this.endCoordinate = new Coordinate(0, 0);
         this.renderer.setElementStyle(this.resizable, 'top', "0px");
         this.renderer.setElementStyle(this.resizable, 'left', "0px");
