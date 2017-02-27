@@ -85,26 +85,28 @@ export class AppComponent {
       listOfSeats = seatList;
     }
     listOfSeats.forEach(seat => {
-
       if (seat.SeatClass == 1) {
         switch (this.selectedSeatType) {
           case 1: {
+            seat.SeatCssClass = "green";
             seat.Src = "../assets/Images/green.png";
             seat.SeatClass = 1;
             break;
           }
           case 2: {
+            seat.SeatCssClass = "blue";
             seat.Src = "../assets/Images/blue.png";
             seat.SeatClass = 2;
             break;
           }
           case 3: {
+            seat.SeatCssClass = "red";
             seat.Src = "../assets/Images/red.png";
             seat.SeatClass = 3;
             break;
           }
           case 4: {
-            isTriggerSort = true;
+            seat.SeatCssClass = "grey";
             seat.Src = "../assets/Images/gray.png";
             seat.SeatClass = 4;
             break;

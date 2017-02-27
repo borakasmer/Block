@@ -4,6 +4,7 @@
                          (mousemove)="onMouseMove($event)" 
                          (mouseleave)="onMouseLeave($event)" 
                          (mouseup)="onMouseUp($event)">
+    <!--
     <div class="seat-row" *ngFor="let row of _ContainerSeat">
         <div class="seat" *ngFor="let seat of row" (click)="TriggerEvent(seat)" 
             [style.top.px]="seat.Top" 
@@ -14,7 +15,19 @@
           <span class="seat-label" *ngIf="seat.SeatClass!=4">{{ seat.RowNumber }}</span>
         </div>
     </div>
-    <div #resizable class="resizableSelector" [style.display]="startSelect"></div>
+    -->
+
+    <div class="seat-row" *ngFor="let row of _ContainerSeat">
+        <div class="seat" *ngFor="let seat of row" (click)="TriggerEvent(seat)"
+            [style.top.px]="seat.Top" 
+            [style.left.px]="seat.Left"
+            [attr.top]="seat.Top" 
+            [attr.left]="seat.Left">
+          <span class="seat-label" [ngClass]="seat.SeatCssClass" *ngIf="seat.SeatClass!=4">{{ seat.RowNumber }}</span>
+        </div>
+    </div>
+
+    <div #resizable class="resizableSelector"></div>
 
     <div class="info" style="position: absolute; left:650px; top:-118px">
         <p class="type">Container Offset</p>
