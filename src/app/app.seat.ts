@@ -24,9 +24,9 @@ export class SeatComponent implements OnInit {
     private resizable: any;
 
     @Input() set ContainerSeat(container) { this._ContainerSeat = container; }
-    @Output() clickSeat: EventEmitter<Seat> = new EventEmitter<Seat>();
-    TriggerEvent(seat) {
-        this.clickSeat.emit(seat);
+    @Output() clickSeat: EventEmitter<Seat[]> = new EventEmitter<Seat[]>();
+    TriggerEvent(selectedSeats) {
+        this.clickSeat.emit(selectedSeats);
     }
 
     ngOnInit() {
@@ -42,8 +42,7 @@ export class SeatComponent implements OnInit {
     onMouseDown(event: MouseEvent): void {
         this.startSelect = 'block';
         this.startCoordinate = new Coordinate(event.clientX, event.clientY);
-        if(event.shiftKey)
-        {
+        if (event.shiftKey) {
             this.renderer.setElementStyle(this.resizable, 'left', event.clientX + "px");
             this.renderer.setElementStyle(this.resizable, 'top', event.clientY + "px");
         }
@@ -73,6 +72,7 @@ export class SeatComponent implements OnInit {
 
     onMouseUp(event: MouseEvent): void {
         this.endCoordinate = new Coordinate(event.clientX, event.clientY);
+        let selectedSeats = [];
         if (this.startCoordinate && this.endCoordinate) {
             if (event.clientX < this.startCoordinate.X) {
                 this.endCoordinate = this.startCoordinate;
@@ -82,17 +82,19 @@ export class SeatComponent implements OnInit {
                 this.endCoordinate = new Coordinate(event.clientX, event.clientY);
             }
 
-            if(event.shiftKey)
+            if (event.shiftKey) {
                 this._ContainerSeat.forEach(row => {
                     row.forEach(rowseat => {
                         if ((rowseat.Top + this.containerY + 50) > this.startCoordinate.Y
                             && (rowseat.Left + this.containerX + 25) > this.startCoordinate.X
                             && (rowseat.Top + this.containerY + 50) < this.endCoordinate.Y
                             && (rowseat.Left + this.containerX + 25) < this.endCoordinate.X) {
-                            this.TriggerEvent(rowseat);
+                            selectedSeats.push(rowseat);
                         }
+                    });
                 });
-            });
+                this.TriggerEvent(selectedSeats);
+            }
         }
     }
 

@@ -75,67 +75,64 @@ export class AppComponent {
   }
   seatType = SeatStatus;
 
-  BuySeat(seat: Seat) {
-    if (seat.SeatClass == 1) {
-      switch (this.selectedSeatType) {
-        case 1: {
-          seat.Src = "../assets/Images/green.png";
-          seat.SeatClass = 1;
-          break;
-        }
-        case 2: {
-          seat.Src = "../assets/Images/blue.png";
-          seat.SeatClass = 2;
-          break;
-        }
-        case 3: {
-          seat.Src = "../assets/Images/red.png";
-          seat.SeatClass = 3;
-          break;
-        }
-        case 4: {
-          seat.Src = "../assets/Images/gray.png";
-          seat.SeatClass = 4;
-
-          //2li dizi içerisindeki tüm koltuklar(seat)ler tek bir diziye atanır.
-          //Amaç: Servisde herbiri gezilerek eski durumları korunur.
-          var currentList = [];
-          for (var i = 0; i < this.Container.length; i++) {
-            currentList = currentList.concat(this.Container[i]);
-          }
-          /*for (var i = 0; i < this.Container.length; i++) {
-            this.Container[i].forEach(seatItem => {
-              currentList.push(seatItem);
-            });
-          }*/
-          //this.Container = this.sortService.SortLeftToRight(this.rowCount, this.columnCount, currentList, this.isIgnoreGaps);
-          this.DrawSeats(currentList, this.isIgnoreGaps);
-          break;
-        }
-      }
+  BuySeat(seatList) {
+    let isTriggerSort: boolean = false;
+    let listOfSeats = [];
+    if (seatList.length == undefined) {
+      listOfSeats.push(seatList)
     }
     else {
-      var triggerSort: boolean = false;
-      if (seat.SeatClass == 4) { triggerSort = true; }
+      listOfSeats = seatList;
+    }
+    listOfSeats.forEach(seat => {
 
-      seat.Src = "../assets/Images/green.png";
-      seat.SeatClass = 1;
-
-      if (triggerSort) {
-        //2li dizi içerisindeki tüm koltuklar(seat)ler tek bir diziye atanır.
-        //Amaç: Servisde herbiri gezilerek eski durumları korunur.
-        var currentList = [];
-        for (var i = 0; i < this.Container.length; i++) {
-          currentList = currentList.concat(this.Container[i]);
+      if (seat.SeatClass == 1) {
+        switch (this.selectedSeatType) {
+          case 1: {
+            seat.Src = "../assets/Images/green.png";
+            seat.SeatClass = 1;
+            break;
+          }
+          case 2: {
+            seat.Src = "../assets/Images/blue.png";
+            seat.SeatClass = 2;
+            break;
+          }
+          case 3: {
+            seat.Src = "../assets/Images/red.png";
+            seat.SeatClass = 3;
+            break;
+          }
+          case 4: {
+            isTriggerSort = true;
+            seat.Src = "../assets/Images/gray.png";
+            seat.SeatClass = 4;
+            break;
+          }
         }
-        /*for (var i = 0; i < this.Container.length; i++) {
-          this.Container[i].forEach(seatItem => {
-            currentList.push(seatItem);
-          });
-        }*/
-        //this.Container = this.sortService.SortLeftToRight(this.rowCount, this.columnCount, currentList, this.isIgnoreGaps);
-        this.DrawSeats(currentList, this.isIgnoreGaps);
       }
+      else {
+        if (seat.SeatClass == 4) { isTriggerSort = true; }
+
+        seat.Src = "../assets/Images/green.png";
+        seat.SeatClass = 1;
+      }
+    })
+
+    if (isTriggerSort) {
+      //2li dizi içerisindeki tüm koltuklar(seat)ler tek bir diziye atanır.
+      //Amaç: Servisde herbiri gezilerek eski durumları korunur.
+      var currentList = [];
+      for (var i = 0; i < this.Container.length; i++) {
+        currentList = currentList.concat(this.Container[i]);
+      }
+      /*for (var i = 0; i < this.Container.length; i++) {
+      this.Container[i].forEach(seatItem => {
+      currentList.push(seatItem);
+      });
+      }*/
+      //this.Container = this.sortService.SortLeftToRight(this.rowCount, this.columnCount, currentList, this.isIgnoreGaps);
+      this.DrawSeats(currentList, this.isIgnoreGaps);
     }
   }
 }
