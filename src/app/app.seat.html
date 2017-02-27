@@ -3,7 +3,8 @@
                          (mousedown)="onMouseDown($event)" 
                          (mousemove)="onMouseMove($event)" 
                          (mouseleave)="onMouseLeave($event)" 
-                         (mouseup)="onMouseUp($event)">
+                         (mouseup)="onMouseUp($event)"
+                         (window:resize)="onResize($event)">
     <!--
     <div class="seat-row" *ngFor="let row of _ContainerSeat">
         <div class="seat" *ngFor="let seat of row" (click)="TriggerEvent(seat)" 

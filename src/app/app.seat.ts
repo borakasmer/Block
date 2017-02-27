@@ -50,6 +50,11 @@ export class SeatComponent implements OnInit {
         this.containerY = this.blockseatcontainerElement.nativeElement.offsetTop + 35;
     }
 
+    onResize(event) {
+        this.containerX = this.blockseatcontainerElement.nativeElement.offsetLeft;
+        this.containerY = this.blockseatcontainerElement.nativeElement.offsetTop;
+    }
+
     onMouseEnter(event: MouseEvent): void {
         this.event = event;
         this.isOnContainer = true;
