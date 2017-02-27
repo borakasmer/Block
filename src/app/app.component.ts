@@ -116,7 +116,7 @@ export class AppComponent {
       }
       else {
         if (seat.SeatClass == 4) { isTriggerSort = true; }
-
+        seat.SeatCssClass = "green";
         seat.Src = "../assets/Images/green.png";
         seat.SeatClass = 1;
       }
