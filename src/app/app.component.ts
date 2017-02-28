@@ -116,9 +116,15 @@ export class AppComponent {
       }
       else {
         if (seat.SeatClass == 4) { isTriggerSort = true; }
-        seat.SeatCssClass = "green";
-        seat.Src = "../assets/Images/green.png";
-        seat.SeatClass = 1;
+        if (seat.SeatClass != this.selectedSeatType) {
+          seat.SeatCssClass = this.sortService.SeatCss.filter(fi => fi.id == this.selectedSeatType)[0].name;
+          seat.SeatClass = this.selectedSeatType;
+        }
+        else {
+          seat.SeatCssClass = "green";
+          seat.Src = "../assets/Images/green.png";
+          seat.SeatClass = 1;
+        }
       }
     })
 
