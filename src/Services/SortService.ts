@@ -639,7 +639,7 @@ export class SortService implements ISortService {
             id: 3, name: "red"
         },
         {
-            id: 4, name: "gray"
+            id: 4, name: "grey"
         }
     ];
 }

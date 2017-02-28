@@ -109,7 +109,9 @@ export class AppComponent {
             seat.SeatCssClass = "grey";
             seat.Src = "../assets/Images/gray.png";
             seat.SeatClass = 4;
-            isTriggerSort = true;
+            if (this.isIgnoreGaps) {
+              isTriggerSort = true;
+            }
             break;
           }
         }
