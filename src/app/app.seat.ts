@@ -204,8 +204,8 @@ export class SeatComponent implements OnInit {
                 if (event.shiftKey)
                     this._ContainerSeat.forEach(row => {
                         row.forEach(rowseat => {
-                            if (rowseat.Top > this.startCoordinate.Y - 25 && rowseat.Left > this.startCoordinate.X -25 && 
-                                rowseat.Top < this.endCoordinate.Y && rowseat.Left < this.endCoordinate.X) {
+                            if (rowseat.Top > this.startCoordinate.Y - 25 && rowseat.Left > this.startCoordinate.X - 25 && 
+                                rowseat.Top < this.endCoordinate.Y - 10 && rowseat.Left < this.endCoordinate.X - 10) {
                                 selectedSeats.push(rowseat);
                             }
                         });
