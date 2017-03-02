@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, Renderer, HostListener, Inject } from '@angular/core';
+import { FormsModule, FormControl } from '@angular/forms';
 import { DOCUMENT } from '@angular/platform-browser';
 import { Seat } from '../Models/Seat';
 import { Coordinate } from '../Models/Coordinate';
@@ -16,12 +17,12 @@ export class SeatComponent implements OnInit {
     private event: MouseEvent;
     private containerX: number = 0;
     private containerY: number = 0;
-    private hasScroll: boolean = false;
     private scrollTop: number = 0;
     private scrollLeft: number = 0;
     private isOnContainer: boolean = true;
     public startCoordinate: Coordinate;
     public endCoordinate: Coordinate;
+    public RowName = [];
 
     @ViewChild('blockseatcontainer') private blockseatcontainerElement: ElementRef;
     @ViewChild('resizable') private resizableElement: ElementRef;
@@ -50,17 +51,17 @@ export class SeatComponent implements OnInit {
         this.containerY = this.blockseatcontainerElement.nativeElement.offsetTop + 35;
     }
 
-    onResize(event) {
+    private onResize(event) {
         this.containerX = this.blockseatcontainerElement.nativeElement.offsetLeft;
         this.containerY = this.blockseatcontainerElement.nativeElement.offsetTop;
     }
 
-    onMouseEnter(event: MouseEvent): void {
+    private onMouseEnter(event: MouseEvent): void {
         this.event = event;
         this.isOnContainer = true;
     }
 
-    onMouseDown(event: MouseEvent): void {
+    private onMouseDown(event: MouseEvent): void {
         //let startX: number = (event.clientX - this.containerX) < 0 ?  -(event.clientX - this.containerX) + this.scrollLeft : event.clientX - this.containerX + this.scrollLeft;
         //let startY: number = (event.clientY - this.containerY) < 0 ?  -(event.clientY - this.containerY) + this.scrollTop : event.clientY - this.containerY + this.scrollTop;   
 
@@ -110,7 +111,7 @@ export class SeatComponent implements OnInit {
         }
     }
 
-    onMouseMove(event: MouseEvent): void {
+    private onMouseMove(event: MouseEvent): void {
         let endX: number = (event.clientX - this.containerX) < 0 ? -(event.clientX - this.containerX) : event.clientX - this.containerX;
         let endY: number = (event.clientY - this.containerY) < 0 ? -(event.clientY - this.containerY) : event.clientY - this.containerY;
 
@@ -194,7 +195,7 @@ export class SeatComponent implements OnInit {
 
     }
 
-    onMouseUp(event: MouseEvent): void {
+    private onMouseUp(event: MouseEvent): void {
         if (this.isOnContainer) {
             this.endCoordinate = new Coordinate(event.clientX, event.clientY);
             let selectedSeats = [];
@@ -217,7 +218,7 @@ export class SeatComponent implements OnInit {
         this.startCoordinate = new Coordinate(0, 0);
     }
 
-    onMouseLeave(event: MouseEvent): void {
+    private onMouseLeave(event: MouseEvent): void {
         this.isOnContainer = false;
         this.SetResizableRectangleToDefault();
     }
@@ -228,5 +229,14 @@ export class SeatComponent implements OnInit {
         this.renderer.setElementStyle(this.resizable, 'left', "0px");
         this.renderer.setElementStyle(this.resizable, 'width', "1px");
         this.renderer.setElementStyle(this.resizable, 'height', "1px");
+    }
+
+    private SaveBlockInformation(blockform): void {
+        blockform.form.value.inputs.forEach(input => {
+            console.log(input.value);
+            this.RowName.push(input.value);
+        });
+
+        console.log(this.RowName);
     }
 }

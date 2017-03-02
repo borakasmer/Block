@@ -56,6 +56,18 @@
     z-index:100;
 }
 
+.rowInput
+{
+    width: 40px;
+    position: relative;
+    left: -50px;
+    height: 24px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    font-size: 12px;
+    padding-left: 5px;
+}
+
 .green
 {
     background-color: #5cd65c;
