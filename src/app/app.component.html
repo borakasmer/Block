@@ -17,6 +17,14 @@
               </select>
   </div>
   <div class="form-group">
+    <label class="control-label"> Artım Şekli</label>
+    <select [(ngModel)]="selectedCounterType" class="selectpicker">
+                 <option [ngValue]="1">Tek Tek</option>
+                 <option [ngValue]="2">Çift Çift</option>
+                 <option [ngValue]="0">Sıralı</option>
+              </select>
+  </div>
+  <div class="form-group">
     <label class="control-label"> Koltuk İşlem Tipi</label>
     <select [(ngModel)]="selectedSeatType" class="selectpicker">
                  <option *ngFor="let type of SeatType" [ngValue]="type.id">{{type.name}}</option>
@@ -24,8 +32,7 @@
     <div class="checkbox">
       <label><input type="checkbox" name="checkIgnoreCaps" [(ngModel)]="isIgnoreGaps"><b>Ignore Caps</b></label>
     </div>
-  </div>
-
+  </div>  
 
   <input type="button" class="btn btn-primary" value="Oluştur" (click)="DrawSeats(null,isIgnoreGaps)">
   <seat [ContainerSeat]="Container" (clickSeat)="BuySeat($event)"></seat>

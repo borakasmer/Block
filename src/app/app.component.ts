@@ -13,9 +13,10 @@ export class AppComponent {
   Container = [];
   columnCount: number;
   rowCount: number;
-  selectedSortType: number = 1;
+  selectedSortType: number = 9;
   selectedSeatType: number = 3;
   isIgnoreGaps: boolean = true;
+  selectedCounterType:number=0;
 
   SortType;
   SeatType;
@@ -32,43 +33,53 @@ export class AppComponent {
     switch (this.SortType.filter(f => f.id == this.selectedSortType)[0].name) {
       case "Soldan Sağ":
         {
-          this.Container = this.sortService.SortLeftToRight(this.rowCount, this.columnCount, currentList, isIgnoreGaps);
+          this.Container = this.sortService.SortLeftToRight(this.rowCount, this.columnCount, currentList, isIgnoreGaps,this.selectedCounterType);
           break;
         }
       case "ZigZag Soldan Sağ":
         {
-          this.Container = this.sortService.SortSnakeLeftToRight(this.rowCount, this.columnCount, currentList, isIgnoreGaps);
+          this.Container = this.sortService.SortSnakeLeftToRight(this.rowCount, this.columnCount, currentList, isIgnoreGaps,this.selectedCounterType);
           break;
         }
       case "ZigZag Sağdan Sola":
         {
-          this.Container = this.sortService.SortSnakeRightToLeft(this.rowCount, this.columnCount, currentList, isIgnoreGaps);
+          this.Container = this.sortService.SortSnakeRightToLeft(this.rowCount, this.columnCount, currentList, isIgnoreGaps,this.selectedCounterType);
           break;
         }
       case "ZigZag Soldan Sağ Aşağıdan Başla":
         {
-          this.Container = this.sortService.SortSnakeLeftToRightFromDown(this.rowCount, this.columnCount, currentList, isIgnoreGaps);
+          this.Container = this.sortService.SortSnakeLeftToRightFromDown(this.rowCount, this.columnCount, currentList, isIgnoreGaps,this.selectedCounterType);
           break;
         }
       case "Sağdan Sola":
         {
-          this.Container = this.sortService.SortRightToLeft(this.rowCount, this.columnCount, currentList, isIgnoreGaps);
+          this.Container = this.sortService.SortRightToLeft(this.rowCount, this.columnCount, currentList, isIgnoreGaps,this.selectedCounterType);
           break;
         }
       case "Soldan Sağ Aşağıdan Başla":
         {
-          this.Container = this.sortService.SortLeftToRightFromDown(this.rowCount, this.columnCount, currentList, isIgnoreGaps);
+          this.Container = this.sortService.SortLeftToRightFromDown(this.rowCount, this.columnCount, currentList, isIgnoreGaps,this.selectedCounterType);
           break;
         }
       case "Sağdan Sola Aşağıdan Başla":
         {
-          this.Container = this.sortService.SortRightToLeftFromDown(this.rowCount, this.columnCount, currentList, isIgnoreGaps);
+          this.Container = this.sortService.SortRightToLeftFromDown(this.rowCount, this.columnCount, currentList, isIgnoreGaps,this.selectedCounterType);
           //this.Container = this.sortService.SortRightToLeftFormDown(this.rowCount, this.columnCount);
           break;
         }
       case "ZigZag Sağdan Sola Aşağıdan Başla":
         {
-          this.Container = this.sortService.SortSnakeRightToLeftFromDown(this.rowCount, this.columnCount, currentList, isIgnoreGaps);
+          this.Container = this.sortService.SortSnakeRightToLeftFromDown(this.rowCount, this.columnCount, currentList, isIgnoreGaps,this.selectedCounterType);
+          break;
+        }
+      case "Sıralı Soldan Sağ":
+        {
+          this.Container = this.sortService.OrderedSortLeftToRight(this.rowCount, this.columnCount, currentList, isIgnoreGaps,this.selectedCounterType);
+          break;
+        }
+         case "Sıralı Sağdan Sola":
+        {
+          this.Container = this.sortService.OrderedSortRightToLeft(this.rowCount, this.columnCount, currentList, isIgnoreGaps,this.selectedCounterType);
           break;
         }
     }

@@ -6,13 +6,19 @@ export class Seat {
     SeatCssClass:string;
     Src:string;
     ID:number;
-    constructor(rowNumber:number,top:number,left:number,seatClass:number,id:number)
+    RowNo:number;
+    ColumnNo:number;
+    SeatDisplayNumber?:number;
+    constructor(rowNumber:number,top:number,left:number,seatClass:number,id:number,rowNo:number,columnNo:number,seatDisplayNumber?:number)
     {
         this.RowNumber=rowNumber;
         this.Top=top;
         this.Left=left;
         this.SeatClass=seatClass;
         this.ID=id;
+        this.RowNo=rowNo;
+        this.ColumnNo=columnNo;
+        this.SeatDisplayNumber=seatDisplayNumber;
         switch(this.SeatClass)
         {
             case 1:{

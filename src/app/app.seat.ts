@@ -32,7 +32,7 @@ export class SeatComponent implements OnInit {
     /*TriggerEvent(selectedSeats) {
         this.clickSeat.emit(selectedSeats);
     }*/
-     /*@Output() clickSeat: EventEmitter<Seat> = new EventEmitter<Seat>();*/
+    /*@Output() clickSeat: EventEmitter<Seat> = new EventEmitter<Seat>();*/
 
     @HostListener("window:scroll", [])
     onWindowScroll() {
@@ -100,7 +100,7 @@ export class SeatComponent implements OnInit {
 
                 if (this.scrollTop > 0)
                     if (startY > this.scrollTop) startY += this.scrollTop; else startY = event.clientY - this.containerY + this.scrollTop;
-                
+
                 if (this.document.body.scrollHeight > window.screen.height) startX += 10;
 
                 //if (startX < 20) startX = 0; 
@@ -149,9 +149,9 @@ export class SeatComponent implements OnInit {
 
                     if (this.scrollTop > 0)
                         if (endY > this.scrollTop) endY += this.scrollTop; else endY = event.clientY - this.containerY + this.scrollTop;
-                    
+
                     if (this.document.body.scrollHeight > window.screen.height) endX += 10;
-                    
+
                     this.endCoordinate = new Coordinate(endX, endY);
 
                     //From right down to left up
@@ -204,7 +204,7 @@ export class SeatComponent implements OnInit {
                 if (event.shiftKey)
                     this._ContainerSeat.forEach(row => {
                         row.forEach(rowseat => {
-                            if (rowseat.Top > this.startCoordinate.Y - 25 && rowseat.Left > this.startCoordinate.X - 25 && 
+                            if (rowseat.Top > this.startCoordinate.Y - 25 && rowseat.Left > this.startCoordinate.X - 25 &&
                                 rowseat.Top < this.endCoordinate.Y - 10 && rowseat.Left < this.endCoordinate.X - 10) {
                                 selectedSeats.push(rowseat);
                             }
