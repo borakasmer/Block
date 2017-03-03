@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef, Renderer, HostListener, Inject } from '@angular/core';
-import { FormsModule, FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { DOCUMENT } from '@angular/platform-browser';
 import { Seat } from '../Models/Seat';
 import { Coordinate } from '../Models/Coordinate';
@@ -231,12 +231,8 @@ export class SeatComponent implements OnInit {
         this.renderer.setElementStyle(this.resizable, 'height', "1px");
     }
 
-    private SaveBlockInformation(blockform): void {
-        blockform.form.value.inputs.forEach(input => {
-            console.log(input.value);
-            this.RowName.push(input.value);
-        });
-
-        console.log(this.RowName);
+    public myForm: FormGroup; 
+    private SaveBlockInformation(form: any): void {
+              console.log(form);
     }
 }

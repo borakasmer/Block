@@ -1,11 +1,6 @@
-<form #blockform="ngForm">
-    <div #blockseatcontainer id="block-seat-container" 
-                            (mouseenter)="onMouseEnter($event)" 
-                            (mousedown)="onMouseDown($event)" 
-                            (mousemove)="onMouseMove($event)" 
-                            (mouseleave)="onMouseLeave($event)" 
-                            (mouseup)="onMouseUp($event)"
-                            (window:resize)="onResize($event)">
+<form #f="ngForm" (ngSubmit)="SaveBlockInformation(f.value)">
+    <div #blockseatcontainer id="block-seat-container" (mouseenter)="onMouseEnter($event)" (mousedown)="onMouseDown($event)"
+        (mousemove)="onMouseMove($event)" (mouseleave)="onMouseLeave($event)" (mouseup)="onMouseUp($event)" (window:resize)="onResize($event)">
         <!--
         <div class="seat-row" *ngFor="let row of _ContainerSeat">
             <div class="seat" *ngFor="let seat of row" (click)="TriggerEvent(seat)" 
@@ -19,15 +14,12 @@
         </div>
         -->
 
-        <div class="seat-row" *ngFor="let row of _ContainerSeat">
-            <input class="rowInput" name="{{row}}" />
-            <div class="seat" *ngFor="let seat of row" (click)="TriggerEvent(seat)"
-                [style.top.px]="seat.Top" 
-                [style.left.px]="seat.Left"
-                [attr.top]="seat.Top" 
-                [attr.left]="seat.Left">
+        <div class="seat-row" *ngFor="let row of _ContainerSeat; let i=index">
+            <input class="rowInput" ngModel id="{{i}}" name="{{i}}" required/>
+            <div class="seat" *ngFor="let seat of row" (click)="TriggerEvent(seat)" [style.top.px]="seat.Top" [style.left.px]="seat.Left"
+                [attr.top]="seat.Top" [attr.left]="seat.Left">
                 <span class="seat-label" [ngClass]="seat.SeatCssClass" [attr.rowID]="seat.ID" [attr.rowNo]="seat.RowNo" [attr.columnNo]="seat.SeatDisplayNumber">
-                    <span *ngIf="seat.SeatClass!=4">{{ seat.SeatDisplayNumber }}</span>                
+                    <span *ngIf="seat.SeatClass!=4">{{ seat.SeatDisplayNumber }}</span>
                 </span>
             </div>
         </div>
@@ -36,8 +28,9 @@
 
         <div class="info" style="position: absolute; left:650px; top:-118px">
             <p class="type">Container Offset</p>
-            <p>x: {{containerX}},   y: {{containerY}}</p>
-        </div>  
+            <p>x: {{containerX}}, y: {{containerY}}</p>
+        </div>
     </div>
-    <input type="button" style="margin-top: 20px;" *ngIf="_ContainerSeat?.length > 0" class="btn btn-primary" value="Blok Bilgisi Kaydet" (click)="SaveBlockInformation(blockform)">
+    <input type="submit" style="margin-top: 20px;" *ngIf="_ContainerSeat?.length > 0" class="btn btn-primary" value="Blok Bilgisi Kaydet"
+        [disabled]="!f.valid">
 </form>
