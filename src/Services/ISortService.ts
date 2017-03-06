@@ -9,6 +9,10 @@ export interface ISortService {
     SortSnakeRightToLeftFromDown(rowCount: number, columnCount: number);
     OrderedSortLeftToRight(rowCount: number, columnCount: number) ;
     OrderedSortRightToLeft(rowCount: number, columnCount: number) ;
+    AddRowOrderedSortLeftToRight(rowCount: number, columnCount: number) ;
+    AddRowOrderedSortRightToLeft(rowCount: number, columnCount: number) ;
+    AddColumnOrderedSortLeftToRight(rowCount: number, columnCount: number) ;
+    AddColumnOrderedSortRightToLeft(rowCount: number, columnCount: number) ;
     SortType;
     SeatType;
 }

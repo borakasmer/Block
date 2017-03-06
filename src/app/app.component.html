@@ -35,5 +35,7 @@
   </div>  
 
   <input type="button" class="btn btn-primary" value="Oluştur" (click)="DrawSeats(null,isIgnoreGaps)">
+  <input type="button" class="btn btn-primary" value="Satır Ekle" (click)="AddRowOrderedSort(true)" *ngIf="Container.length>0 && (selectedSortType==9 || selectedSortType==10) ">
+  <input type="button" class="btn btn-primary" value="Sütun Ekle" (click)="AddColumunOrderedSort(true)"  *ngIf="Container.length>0 && (selectedSortType==9 || selectedSortType==10)">
   <seat [ContainerSeat]="Container" (clickSeat)="BuySeat($event)"></seat>
 </div>
