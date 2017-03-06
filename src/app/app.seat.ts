@@ -22,7 +22,7 @@ export class SeatComponent implements OnInit {
     private isOnContainer: boolean = true;
     public startCoordinate: Coordinate;
     public endCoordinate: Coordinate;
-    public RowName = [];
+    public blockRow = [];
 
     @ViewChild('blockseatcontainer') private blockseatcontainerElement: ElementRef;
     @ViewChild('resizable') private resizableElement: ElementRef;
@@ -227,12 +227,12 @@ export class SeatComponent implements OnInit {
         this.endCoordinate = new Coordinate(0, 0);
         this.renderer.setElementStyle(this.resizable, 'top', "0px");
         this.renderer.setElementStyle(this.resizable, 'left', "0px");
-        this.renderer.setElementStyle(this.resizable, 'width', "1px");
-        this.renderer.setElementStyle(this.resizable, 'height', "1px");
+        this.renderer.setElementStyle(this.resizable, 'width', "0px");
+        this.renderer.setElementStyle(this.resizable, 'height', "0px");
     }
 
     public myForm: FormGroup; 
     private SaveBlockInformation(form: any): void {
-              console.log(form);
+        console.log(this.blockRow);
     }
 }

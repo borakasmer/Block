@@ -49,9 +49,8 @@
     position: absolute; 
     cursor: default; 
     top:0px; left:0px; 
-    width: 1px; height: 1px;
-    background-color: #90b9f9; 
-    border:1px solid #5d9bfc; 
+    width: 0px; height: 0px;
+    background-color: #90b9f9;
     opacity: 0.5;
     z-index:100;
 }
