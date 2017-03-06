@@ -23,6 +23,7 @@ export class SeatComponent implements OnInit {
     public startCoordinate: Coordinate;
     public endCoordinate: Coordinate;
     public blockRow = [];
+    public myForm: FormGroup; 
 
     @ViewChild('blockseatcontainer') private blockseatcontainerElement: ElementRef;
     @ViewChild('resizable') private resizableElement: ElementRef;
@@ -30,11 +31,7 @@ export class SeatComponent implements OnInit {
 
     @Input() set ContainerSeat(container) { this._ContainerSeat = container; }
     @Output() clickSeat: EventEmitter<Seat[]> = new EventEmitter<Seat[]>();
-    /*TriggerEvent(selectedSeats) {
-        this.clickSeat.emit(selectedSeats);
-    }*/
-    /*@Output() clickSeat: EventEmitter<Seat> = new EventEmitter<Seat>();*/
-
+    
     @HostListener("window:scroll", [])
     onWindowScroll() {
         this.scrollTop = this.document.body.scrollTop;
@@ -231,8 +228,12 @@ export class SeatComponent implements OnInit {
         this.renderer.setElementStyle(this.resizable, 'height', "0px");
     }
 
-    public myForm: FormGroup; 
-    private SaveBlockInformation(form: any): void {
-        console.log(this.blockRow);
+    private SaveBlockInformation(): void {
+        var tempBlockRow = this.blockRow;
+        this.blockRow = [];
+        tempBlockRow.forEach((rowName, index) => {
+            if(index < this._ContainerSeat.length)
+                this.blockRow.push(rowName);
+        });
     }
 }
