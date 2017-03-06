@@ -9,7 +9,8 @@ export class Seat {
     RowNo:number;
     ColumnNo:number;
     SeatDisplayNumber?:number;
-    constructor(rowNumber:number,top:number,left:number,seatClass:number,id:number,rowNo:number,columnNo:number,seatDisplayNumber?:number)
+    IsAddNewSeat?:boolean=false;
+    constructor(rowNumber:number,top:number,left:number,seatClass:number,id:number,rowNo:number,columnNo:number,seatDisplayNumber?:number,isAddNewSeat?:boolean)
     {
         this.RowNumber=rowNumber;
         this.Top=top;
@@ -19,6 +20,7 @@ export class Seat {
         this.RowNo=rowNo;
         this.ColumnNo=columnNo;
         this.SeatDisplayNumber=seatDisplayNumber;
+        this.IsAddNewSeat=isAddNewSeat;
         switch(this.SeatClass)
         {
             case 1:{

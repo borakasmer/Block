@@ -180,17 +180,17 @@ export class AppComponent {
     }
     if (this.selectedSortType == 9) {
       if (!this.isAddColumn)
-        this.Container = this.sortService.AddRowOrderedSortLeftToRight(Number(currentList.length / this.columnCount) + (isAddNewRow ? 1 : 0), this.columnCount, currentList, this.isIgnoreGaps, this.selectedCounterType)
+        this.Container = this.sortService.AddRowOrderedSortLeftToRight(Number(currentList.length / this.columnCount) + (isAddNewRow ? 1 : 0), this.columnCount, currentList, this.isIgnoreGaps, this.selectedCounterType,this.rowCount)
       else
-        this.Container = this.sortService.AddRowOrderedSortLeftToRight(this.Container.length + (isAddNewRow ? 1 : 0), this.Container[0].length, currentList, this.isIgnoreGaps, this.selectedCounterType)
+        this.Container = this.sortService.AddRowOrderedSortLeftToRight(this.Container.length + (isAddNewRow ? 1 : 0), this.Container[0].length, currentList, this.isIgnoreGaps, this.selectedCounterType,this.rowCount)
     }
     else if (this.selectedSortType == 10) {
       //Önceden kolon eklenmemiş ise ilk sefer satır ekleniyor ise.
       if (!this.isAddColumn)
-        this.Container = this.sortService.AddRowOrderedSortRightToLeft(Number(currentList.length / this.columnCount) + (isAddNewRow ? 1 : 0), this.columnCount, currentList, this.isIgnoreGaps, this.selectedCounterType)
+        this.Container = this.sortService.AddRowOrderedSortRightToLeft(Number(currentList.length / this.columnCount) + (isAddNewRow ? 1 : 0), this.columnCount, currentList, this.isIgnoreGaps, this.selectedCounterType,this.rowCount)
       //Önceden kolon eklenmiş ise buna satır ekleyebiliriz. "this.Container.length" yeni eklenmiş dahil toplam satır sayısıdır. "this.Container[0].length" yeni eklenmiş dahil toplam kolon sayısıdır.
       else
-        this.Container = this.sortService.AddRowOrderedSortRightToLeft(this.Container.length + (isAddNewRow ? 1 : 0), this.Container[0].length, currentList, this.isIgnoreGaps, this.selectedCounterType)
+        this.Container = this.sortService.AddRowOrderedSortRightToLeft(this.Container.length + (isAddNewRow ? 1 : 0), this.Container[0].length, currentList, this.isIgnoreGaps, this.selectedCounterType,this.rowCount)
     }
   }
 
