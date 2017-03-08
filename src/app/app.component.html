@@ -32,10 +32,29 @@
     <div class="checkbox">
       <label><input type="checkbox" name="checkIgnoreCaps" [(ngModel)]="isIgnoreGaps"><b>Ignore Caps</b></label>
     </div>
-  </div>  
-
+  </div>
+  <label class="control-label"> Koltuk Başlangıç Numarası</label>
+  <div class="input-group" style="width: 150px;">
+    <span class="input-group-btn">
+              <button type="button" class="btn btn-danger btn-number" (click)="Minus()">
+                <span class="glyphicon glyphicon-minus"></span>
+    </button>
+    </span>
+    <input type="text" name="seatStartNumber" class="form-control input-number" [(ngModel)]="seatStartNumber" [value]="seatStartNumber"
+      min="1" max="1000">
+    <span class="input-group-btn">
+              <button type="button" class="btn btn-success btn-number" (click)="Plus()">
+                  <span class="glyphicon glyphicon-plus"></span>
+    </button>
+    </span>
+  </div>
+  <!--<div class="form-group">
+    <label class="control-label"> Koltuk Başlangıç Sırası</label>
+    <input type="text" class="form-control" name="seatStartNumber" [(ngModel)]="seatStartNumber">
+  </div>-->
+  <br>
   <input type="button" class="btn btn-primary" value="Oluştur" (click)="DrawSeats(null,isIgnoreGaps)">
   <input type="button" class="btn btn-primary" value="Satır Ekle" (click)="AddRowOrderedSort(true)" *ngIf="Container.length>0 && (selectedSortType==9 || selectedSortType==10) ">
-  <input type="button" class="btn btn-primary" value="Sütun Ekle" (click)="AddColumunOrderedSort(true)"  *ngIf="Container.length>0 && (selectedSortType==9 || selectedSortType==10)">
+  <input type="button" class="btn btn-primary" value="Sütun Ekle" (click)="AddColumunOrderedSort(true)" *ngIf="Container.length>0 && (selectedSortType==9 || selectedSortType==10)">
   <seat [ContainerSeat]="Container" (clickSeat)="BuySeat($event)"></seat>
 </div>

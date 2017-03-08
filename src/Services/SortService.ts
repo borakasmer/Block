@@ -9,12 +9,13 @@ export class SortService implements ISortService {
 
     //currentList var ise dizilmiş olna koltukların eski halleri gönderilmiş demektir.
     //isIgnoreGaps: Koltuk iptal işileminde, sıralama anında iptal edilen koltuk sayılsın mı sayılmasın mı?
-    SortLeftToRight(rowCount: number, columnCount: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number) {
+    SortLeftToRight(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number) {
         var Container = [];
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
             for (var c = 0; c < columnCount; c++) {
@@ -36,20 +37,21 @@ export class SortService implements ISortService {
 
                 }
                 else {
-                    seatCounter++;
-                    seatDisplayNumber = seatDisplayNumber + (selectedCounterType != 0 ? 2 : 1);
+                    seatCounter++;                    
+                    seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                 }
             }
             Container.push(SeatList);
         }
         return Container;
     }
-    SortLeftToRightFromDown(rowCount: number, columnCount: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number) {
+    SortLeftToRightFromDown(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number) {
         var Container = [];
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
 
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
@@ -70,8 +72,8 @@ export class SortService implements ISortService {
 
                 }
                 else {
-                    seatCounter++;
-                    seatDisplayNumber = seatDisplayNumber + (selectedCounterType != 0 ? 2 : 1);
+                    seatCounter++;                    
+                    seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                 }
             }
             Container.push(SeatList);
@@ -79,12 +81,13 @@ export class SortService implements ISortService {
         return Container.reverse();
         //return Container;
     }
-    SortRightToLeft(rowCount: number, columnCount: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number) {
+    SortRightToLeft(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number) {
         var Container = [];
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
 
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
@@ -108,8 +111,8 @@ export class SortService implements ISortService {
                 }
                 else {
 
-                    seatCounter++;
-                    seatDisplayNumber = seatDisplayNumber + (selectedCounterType != 0 ? 2 : 1);
+                    seatCounter++;                    
+                    seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                 }
             }
             Container.push(SeatList.reverse());
@@ -117,12 +120,14 @@ export class SortService implements ISortService {
         }
         return Container;
     }
-    SortRightToLeftFromDown(rowCount: number, columnCount: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number) {
+    SortRightToLeftFromDown(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number) {
         var Container = [];
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
+
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
             for (var c = 0; c < columnCount; c++) {
@@ -144,21 +149,23 @@ export class SortService implements ISortService {
 
                 }
                 else {
-                    seatCounter++;
-                    seatDisplayNumber = seatDisplayNumber + (selectedCounterType != 0 ? 2 : 1);
+                    seatCounter++;                    
+                    seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                 }
             }
             Container.push(SeatList.reverse());
         }
         return Container.reverse();
     }
-    SortSnakeLeftToRight(rowCount: number, columnCount: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number) {
+    SortSnakeLeftToRight(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number) {
         var isReversSort = false;
         var Container = [];
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+
+        seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
             if (isReversSort == false) {
@@ -178,8 +185,8 @@ export class SortService implements ISortService {
 
                     }
                     else {
-                        seatCounter++;
-                        seatDisplayNumber = seatDisplayNumber + (selectedCounterType != 0 ? 2 : 1);
+                        seatCounter++;                        
+                        seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                     }
                 }
                 isReversSort = true;
@@ -204,8 +211,8 @@ export class SortService implements ISortService {
 
                     }
                     else {
-                        seatCounter++;
-                        seatDisplayNumber = seatDisplayNumber + (selectedCounterType != 0 ? 2 : 1);
+                        seatCounter++;                        
+                        seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                     }
                 }
                 isReversSort = false;
@@ -222,13 +229,14 @@ export class SortService implements ISortService {
         }
         return Container;
     }
-    SortSnakeLeftToRightFromDown(rowCount: number, columnCount: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number) {
+    SortSnakeLeftToRightFromDown(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number) {
         var isReversSort = false;
         var Container = [];
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
 
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
@@ -249,7 +257,7 @@ export class SortService implements ISortService {
                     }
                     else {
                         seatCounter++;
-                        seatDisplayNumber = seatDisplayNumber + (selectedCounterType != 0 ? 2 : 1);
+                        seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                     }
                 }
                 isReversSort = true;
@@ -273,8 +281,8 @@ export class SortService implements ISortService {
 
                     }
                     else {
-                        seatCounter++;
-                        seatDisplayNumber = seatDisplayNumber + (selectedCounterType != 0 ? 2 : 1);
+                        seatCounter++;                        
+                        seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                     }
                 }
                 isReversSort = false;
@@ -289,13 +297,14 @@ export class SortService implements ISortService {
         return Container.reverse();
         //return Container;
     }
-    SortSnakeRightToLeft(rowCount: number, columnCount: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number) {
+    SortSnakeRightToLeft(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number) {
         var isReversSort = true;
         var Container = [];
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
 
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
@@ -316,8 +325,8 @@ export class SortService implements ISortService {
 
                     }
                     else {
-                        seatCounter++;
-                        seatDisplayNumber = seatDisplayNumber + (selectedCounterType != 0 ? 2 : 1);
+                        seatCounter++;                        
+                        seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                     }
                 }
                 isReversSort = true;
@@ -342,8 +351,8 @@ export class SortService implements ISortService {
 
                     }
                     else {
-                        seatCounter++;
-                        seatDisplayNumber = seatDisplayNumber + (selectedCounterType != 0 ? 2 : 1);
+                        seatCounter++;                        
+                        seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                     }
                 }
                 isReversSort = false;
@@ -360,13 +369,15 @@ export class SortService implements ISortService {
         }
         return Container;
     }
-    SortSnakeRightToLeftFromDown(rowCount: number, columnCount: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number) {
+    SortSnakeRightToLeftFromDown(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number) {
         var isReversSort = true;
         var Container = [];
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
+
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
             if (isReversSort == false) {
@@ -386,8 +397,8 @@ export class SortService implements ISortService {
 
                     }
                     else {
-                        seatCounter++;
-                        seatDisplayNumber = seatDisplayNumber + (selectedCounterType != 0 ? 2 : 1);
+                        seatCounter++;                        
+                        seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                     }
                 }
                 isReversSort = true;
@@ -410,8 +421,8 @@ export class SortService implements ISortService {
 
                     }
                     else {
-                        seatCounter++;
-                        seatDisplayNumber = seatDisplayNumber + (selectedCounterType != 0 ? 2 : 1);
+                        seatCounter++;                        
+                        seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                     }
                 }
                 isReversSort = false;
@@ -428,12 +439,14 @@ export class SortService implements ISortService {
         return Container.reverse();
         //return Container;
     }
-    OrderedSortLeftToRight(rowCount: number, columnCount: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number) {
+    OrderedSortLeftToRight(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number) {
         var Container = [];
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+
+        seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
             for (var c = 0; c < columnCount; c++) {
@@ -455,22 +468,24 @@ export class SortService implements ISortService {
 
                 }
                 else {
-                    seatCounter++;
-                    seatDisplayNumber = seatDisplayNumber + (selectedCounterType != 0 ? 2 : 1);
+                    seatCounter++;                    
+                    seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                 }
             }
             seatCounter = 1;
             seatDisplayNumber = selectedCounterType != 0 ? selectedCounterType : 1;
+            seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;//Başlangıç değeri verildi ise bu değere göre yeni dizim oluşturulur.
             Container.push(SeatList);
         }
         return Container;
     }
-    OrderedSortRightToLeft(rowCount: number, columnCount: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number) {
+    OrderedSortRightToLeft(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number) {
         var Container = [];
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
             for (var c = 0; c < columnCount; c++) {
@@ -493,23 +508,25 @@ export class SortService implements ISortService {
 
                 }
                 else {
-                    seatCounter++;
-                    seatDisplayNumber = seatDisplayNumber + (selectedCounterType != 0 ? 2 : 1);
+                    seatCounter++;                    
+                    seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);                  
                 }
             }
             Container.push(SeatList.reverse());
             seatCounter = 1;
             seatDisplayNumber = selectedCounterType != 0 ? selectedCounterType : 1;
+            seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;//Başlangıç değeri verildi ise bu değere göre yeni dizim oluşturulur.
             //Container.push(SeatList);
         }
         return Container;
     }
-    AddRowOrderedSortLeftToRight(rowCount: number, columnCount: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number,inputRowCount?: number) {
+    AddRowOrderedSortLeftToRight(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number, inputRowCount?: number) {
         var Container = [];
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
             for (var c = 0; c < columnCount; c++) {
@@ -525,29 +542,31 @@ export class SortService implements ISortService {
                     //(currentSeat != null && currentSeat[0].SeatClass == 4 && isIgnoreGaps) ? null : seatCounter,
                     seatCounter,
                     this.basePositionCordinate * r, this.basePositionCordinate * c,
-                    currentSeat != null ? currentSeat.SeatClass : (r == rowCount - 1 ? 4 : 1), seatCounterUnique, r + 1, c + 1, seatDisplayNumber, (r > inputRowCount - 1)?true:false);
+                    currentSeat != null ? currentSeat.SeatClass : (r == rowCount - 1 ? 4 : 1), seatCounterUnique, r + 1, c + 1, seatDisplayNumber, (r > inputRowCount - 1) ? true : false);
                 SeatList.push(st);
                 seatCounterUnique++;
                 if (st.SeatClass == 4 && isIgnoreGaps) {
 
                 }
                 else {
-                    seatCounter++;
-                    seatDisplayNumber = seatDisplayNumber + (selectedCounterType != 0 ? 2 : 1);
+                    seatCounter++;                    
+                    seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                 }
             }
             seatCounter = 1;
             seatDisplayNumber = selectedCounterType != 0 ? selectedCounterType : 1;
+            seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;//Başlangıç değeri verildi ise bu değere göre yeni dizim oluşturulur.            
             Container.push(SeatList);
         }
         return Container;
     }
-    AddRowOrderedSortRightToLeft(rowCount: number, columnCount: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number,inputRowCount?: number) {
+    AddRowOrderedSortRightToLeft(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number, inputRowCount?: number) {
         var Container = [];
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
             for (var c = 0; c < columnCount; c++) {
@@ -560,30 +579,32 @@ export class SortService implements ISortService {
                 var st = new Seat(
                     seatCounter,
                     this.basePositionCordinate * r, this.basePositionCordinate * (columnCount - c - 1),
-                    currentSeat != null ? currentSeat.SeatClass : (r == rowCount - 1 ? 4 : 1), seatCounterUnique, r + 1, c + 1, seatDisplayNumber, (r > inputRowCount - 1)?true:false);
+                    currentSeat != null ? currentSeat.SeatClass : (r == rowCount - 1 ? 4 : 1), seatCounterUnique, r + 1, c + 1, seatDisplayNumber, (r > inputRowCount - 1) ? true : false);
                 SeatList.push(st);
                 seatCounterUnique++;
                 if (st.SeatClass == 4 && isIgnoreGaps) {
 
                 }
                 else {
-                    seatCounter++;
-                    seatDisplayNumber = seatDisplayNumber + (selectedCounterType != 0 ? 2 : 1);
+                    seatCounter++;                    
+                    seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                 }
             }
             Container.push(SeatList.reverse());// Ters yöne sıralama için yapılır.
             seatCounter = 1;
             seatDisplayNumber = selectedCounterType != 0 ? selectedCounterType : 1;
+            seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;//Başlangıç değeri verildi ise bu değere göre yeni dizim oluşturulur.
             //Container.push(SeatList);
         }
         return Container;
     }
-    AddColumnOrderedSortLeftToRight(rowCount: number, columnCount: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number, inputColumnCount?: number) {
+    AddColumnOrderedSortLeftToRight(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number, inputColumnCount?: number) {
         var Container = [];
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
         //var newAddSeatCount: number = 0;//Yeni eklenen koltuk artımı
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
@@ -622,22 +643,24 @@ export class SortService implements ISortService {
 
                 }
                 else {
-                    seatCounter++;
-                    seatDisplayNumber = seatDisplayNumber + (selectedCounterType != 0 ? 2 : 1);
+                    seatCounter++;                    
+                    seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                 }
             }
             seatCounter = 1;
             seatDisplayNumber = selectedCounterType != 0 ? selectedCounterType : 1;
+            seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;//Başlangıç değeri verildi ise bu değere göre yeni dizim oluşturulur.
             Container.push(SeatList);
         }
         return Container;
     }
-    AddColumnOrderedSortRightToLeft(rowCount: number, columnCount: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number, inputColumnCount?: number) {
+    AddColumnOrderedSortRightToLeft(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number, inputColumnCount?: number) {
         var Container = [];
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
         //var newAddSeatCount: number = 0;//Yeni eklenen koltuk artımı
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
@@ -676,12 +699,13 @@ export class SortService implements ISortService {
 
                 }
                 else {
-                    seatCounter++;
-                    seatDisplayNumber = seatDisplayNumber + (selectedCounterType != 0 ? 2 : 1);
+                    seatCounter++;                    
+                    seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                 }
             }
             seatCounter = 1;
             seatDisplayNumber = selectedCounterType != 0 ? selectedCounterType : 1;
+            seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;//Başlangıç değeri verildi ise bu değere göre yeni dizim oluşturulur.
             Container.push(SeatList.reverse());
         }
         return Container;
