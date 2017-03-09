@@ -12,8 +12,8 @@ import { Coordinate } from '../Models/Coordinate';
 })
 
 export class SeatComponent implements OnInit {
-    constructor(private renderer: Renderer, @Inject(DOCUMENT) private document: Document) { }
-    private _ContainerSeat = [];
+    constructor(private renderer: Renderer, @Inject(DOCUMENT) private document: Document) {}
+    private _ContainerSeat = [];    
     private event: MouseEvent;
     private containerX: number = 0;
     private containerY: number = 0;
@@ -23,15 +23,16 @@ export class SeatComponent implements OnInit {
     public startCoordinate: Coordinate;
     public endCoordinate: Coordinate;
     public blockRow = [];
-    public myForm: FormGroup; 
+    public myForm: FormGroup;
 
     @ViewChild('blockseatcontainer') private blockseatcontainerElement: ElementRef;
     @ViewChild('resizable') private resizableElement: ElementRef;
     private resizable: any;
 
     @Input() set ContainerSeat(container) { this._ContainerSeat = container; }
+    @Input() set BlockRow(blockRow) { this.blockRow = blockRow; }
     @Output() clickSeat: EventEmitter<Seat[]> = new EventEmitter<Seat[]>();
-    
+
     @HostListener("window:scroll", [])
     onWindowScroll() {
         this.scrollTop = this.document.body.scrollTop;
@@ -42,7 +43,7 @@ export class SeatComponent implements OnInit {
         this.clickSeat.emit(seat);
     }
 
-    ngOnInit() {
+    ngOnInit() {        
         this.resizable = this.resizableElement.nativeElement;
         this.containerX = this.blockseatcontainerElement.nativeElement.offsetLeft;
         this.containerY = this.blockseatcontainerElement.nativeElement.offsetTop + 35;
@@ -232,7 +233,7 @@ export class SeatComponent implements OnInit {
         var tempBlockRow = this.blockRow;
         this.blockRow = [];
         tempBlockRow.forEach((rowName, index) => {
-            if(index < this._ContainerSeat.length)
+            if (index < this._ContainerSeat.length)
                 this.blockRow.push(rowName);
         });
     }

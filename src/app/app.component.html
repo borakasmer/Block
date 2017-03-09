@@ -25,6 +25,14 @@
               </select>
   </div>
   <div class="form-group">
+    <label class="control-label"> Satır İsimlendirme</label>
+    <select [(ngModel)]="rowNameType" class="selectpicker">
+                 <option [ngValue]="1">A-B.....Z</option>
+                 <option [ngValue]="2">1-2-3.....</option>
+                 <option [ngValue]="3">I-II-IV.....</option>
+              </select>
+  </div>
+  <div class="form-group">
     <label class="control-label"> Koltuk İşlem Tipi</label>
     <select [(ngModel)]="selectedSeatType" class="selectpicker">
                  <option *ngFor="let type of SeatType" [ngValue]="type.id">{{type.name}}</option>
@@ -56,5 +64,5 @@
   <input type="button" class="btn btn-primary" value="Oluştur" (click)="DrawSeats(null,isIgnoreGaps)">
   <input type="button" class="btn btn-primary" value="Satır Ekle" (click)="AddRowOrderedSort(true)" *ngIf="Container.length>0 && (selectedSortType==9 || selectedSortType==10) ">
   <input type="button" class="btn btn-primary" value="Sütun Ekle" (click)="AddColumunOrderedSort(true)" *ngIf="Container.length>0 && (selectedSortType==9 || selectedSortType==10)">
-  <seat [ContainerSeat]="Container" (clickSeat)="BuySeat($event)"></seat>
+  <seat [ContainerSeat]="Container" (clickSeat)="BuySeat($event)" [BlockRow]="BlockRow"></seat>
 </div>

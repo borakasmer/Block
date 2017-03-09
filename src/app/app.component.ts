@@ -9,19 +9,21 @@ import { SortService } from '../Services/SortService';
 })
 
 export class AppComponent {
+  BlockRow = [];
+  rowNameType: number = 1;//Satır isimlendirme tipi
   title = 'Koltuk sayısı giriniz';
-  Container = [];
-  columnCount: number;
-  rowCount: number;
-  selectedSortType: number = 9;
-  selectedSeatType: number = 3;
-  isIgnoreGaps: boolean = true;
-  selectedCounterType: number = 0;
-  isAddRow: boolean = false;
-  isAddColumn: boolean = false;
-  SortType;
-  SeatType;
-  seatStartNumber:number=1;
+  Container = [];//Tüm koltukların konduğu kabuk.
+  columnCount: number;//kolon sayısı
+  rowCount: number;//satır sayısı
+  selectedSortType: number = 9;//Sıralama Şekli
+  selectedSeatType: number = 3;//Tıklanınca seçilen koltuk tipi
+  isIgnoreGaps: boolean = true;//Passive durumda koltuk kaydırma yapılsın mı?
+  selectedCounterType: number = 0;//Koltuk numaraları sıralanırken yapılan artım şekli 1-3, 2-4 gibi
+  isAddRow: boolean = false;//Yeni eklenen satır mı?
+  isAddColumn: boolean = false;//Yeni eklenen kolon mu?
+  SortType;//Sıralam tipi
+  SeatType;//Koltuk tipi
+  seatStartNumber: number = 1;
   constructor(private sortService: SortService) {
     this.SortType = sortService.SortType.sort(function (a, b) {
       if (a.name < b.name) return -1;
@@ -34,56 +36,72 @@ export class AppComponent {
   DrawSeats(currentList?: Array<Seat>, isIgnoreGaps?: boolean) {
     this.isAddRow = false;
     this.isAddColumn = false;
+
+    switch (this.rowNameType) {
+      case 1: {
+        this.BlockRow = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'Y', 'Z'];
+        break;
+      }
+      case 2: {
+        this.BlockRow = Array.apply(null, { length: this.rowCount }).map((x, i) => i + 1);
+        break;
+      }
+      case 3: {
+        this.BlockRow = Array.apply(null, { length: this.rowCount }).map((x, i) => this.sortService.ConvertNumberToRoman(i + 1));
+        break;
+      }
+    }
+
     switch (this.SortType.filter(f => f.id == this.selectedSortType)[0].name) {
       case "Soldan Sağ":
         {
-          this.Container = this.sortService.SortLeftToRight(this.rowCount, this.columnCount,this.seatStartNumber, currentList, isIgnoreGaps, this.selectedCounterType);
+          this.Container = this.sortService.SortLeftToRight(this.rowCount, this.columnCount, this.seatStartNumber, currentList, isIgnoreGaps, this.selectedCounterType);
           break;
         }
       case "ZigZag Soldan Sağ":
         {
-          this.Container = this.sortService.SortSnakeLeftToRight(this.rowCount, this.columnCount,this.seatStartNumber, currentList, isIgnoreGaps, this.selectedCounterType);
+          this.Container = this.sortService.SortSnakeLeftToRight(this.rowCount, this.columnCount, this.seatStartNumber, currentList, isIgnoreGaps, this.selectedCounterType);
           break;
         }
       case "ZigZag Sağdan Sola":
         {
-          this.Container = this.sortService.SortSnakeRightToLeft(this.rowCount, this.columnCount,this.seatStartNumber, currentList, isIgnoreGaps, this.selectedCounterType);
+          this.Container = this.sortService.SortSnakeRightToLeft(this.rowCount, this.columnCount, this.seatStartNumber, currentList, isIgnoreGaps, this.selectedCounterType);
           break;
         }
       case "ZigZag Soldan Sağ Aşağıdan Başla":
         {
-          this.Container = this.sortService.SortSnakeLeftToRightFromDown(this.rowCount, this.columnCount,this.seatStartNumber, currentList, isIgnoreGaps, this.selectedCounterType);
+          this.Container = this.sortService.SortSnakeLeftToRightFromDown(this.rowCount, this.columnCount, this.seatStartNumber, currentList, isIgnoreGaps, this.selectedCounterType);
           break;
         }
       case "Sağdan Sola":
         {
-          this.Container = this.sortService.SortRightToLeft(this.rowCount, this.columnCount,this.seatStartNumber, currentList, isIgnoreGaps, this.selectedCounterType);
+          this.Container = this.sortService.SortRightToLeft(this.rowCount, this.columnCount, this.seatStartNumber, currentList, isIgnoreGaps, this.selectedCounterType);
           break;
         }
       case "Soldan Sağ Aşağıdan Başla":
         {
-          this.Container = this.sortService.SortLeftToRightFromDown(this.rowCount, this.columnCount,this.seatStartNumber, currentList, isIgnoreGaps, this.selectedCounterType);
+          this.Container = this.sortService.SortLeftToRightFromDown(this.rowCount, this.columnCount, this.seatStartNumber, currentList, isIgnoreGaps, this.selectedCounterType);
           break;
         }
       case "Sağdan Sola Aşağıdan Başla":
         {
-          this.Container = this.sortService.SortRightToLeftFromDown(this.rowCount, this.columnCount,this.seatStartNumber, currentList, isIgnoreGaps, this.selectedCounterType);
+          this.Container = this.sortService.SortRightToLeftFromDown(this.rowCount, this.columnCount, this.seatStartNumber, currentList, isIgnoreGaps, this.selectedCounterType);
           //this.Container = this.sortService.SortRightToLeftFormDown(this.rowCount, this.columnCount);
           break;
         }
       case "ZigZag Sağdan Sola Aşağıdan Başla":
         {
-          this.Container = this.sortService.SortSnakeRightToLeftFromDown(this.rowCount, this.columnCount,this.seatStartNumber, currentList, isIgnoreGaps, this.selectedCounterType);
+          this.Container = this.sortService.SortSnakeRightToLeftFromDown(this.rowCount, this.columnCount, this.seatStartNumber, currentList, isIgnoreGaps, this.selectedCounterType);
           break;
         }
       case "Sıralı Soldan Sağ":
         {
-          this.Container = this.sortService.OrderedSortLeftToRight(this.rowCount, this.columnCount,this.seatStartNumber, currentList, isIgnoreGaps, this.selectedCounterType);
+          this.Container = this.sortService.OrderedSortLeftToRight(this.rowCount, this.columnCount, this.seatStartNumber, currentList, isIgnoreGaps, this.selectedCounterType);
           break;
         }
       case "Sıralı Sağdan Sola":
         {
-          this.Container = this.sortService.OrderedSortRightToLeft(this.rowCount, this.columnCount,this.seatStartNumber, currentList, isIgnoreGaps, this.selectedCounterType);
+          this.Container = this.sortService.OrderedSortRightToLeft(this.rowCount, this.columnCount, this.seatStartNumber, currentList, isIgnoreGaps, this.selectedCounterType);
           break;
         }
     }
@@ -136,7 +154,7 @@ export class AppComponent {
         if (seat.SeatClass != this.selectedSeatType) {
           seat.SeatCssClass = this.sortService.SeatCss.filter(fi => fi.id == this.selectedSeatType)[0].name;
           seat.SeatClass = this.selectedSeatType;
-          if(seat.SeatClass==4){isTriggerSort = true;}
+          if (seat.SeatClass == 4) { isTriggerSort = true; }
         }
         else {
           seat.SeatCssClass = "green";
@@ -176,22 +194,42 @@ export class AppComponent {
   AddRowOrderedSort(isAddNewRow: boolean) {
     this.isAddRow = true; //Herhangi bir seat tıklanınca artık DrawSeats() yerine AddRowOrderedSort() methodu çağrılır.
     var currentList = [];
+
     for (var i = 0; i < this.Container.length; i++) {
       currentList = currentList.concat(this.Container[i]);
     }
+
+    //Satır isimlendirme
+    let totalRowCount = Number(currentList.length / this.columnCount) + (isAddNewRow ? 1 : 0);
+    switch (this.rowNameType) {
+      case 1: {
+        this.BlockRow = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'Y', 'Z'];
+        break;
+      }
+      case 2: {
+        this.BlockRow = Array.apply(null, { length: totalRowCount }).map((x, i) => i + 1);
+        break;
+      }
+      case 3: {
+        this.BlockRow = Array.apply(null, { length: totalRowCount }).map((x, i) => this.sortService.ConvertNumberToRoman(i + 1));
+        break;
+      }
+    }
+    //------------------------------------------------------------
+
     if (this.selectedSortType == 9) {
       if (!this.isAddColumn)
-        this.Container = this.sortService.AddRowOrderedSortLeftToRight(Number(currentList.length / this.columnCount) + (isAddNewRow ? 1 : 0), this.columnCount,this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType,this.rowCount)
+        this.Container = this.sortService.AddRowOrderedSortLeftToRight(Number(currentList.length / this.columnCount) + (isAddNewRow ? 1 : 0), this.columnCount, this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.rowCount)
       else
-        this.Container = this.sortService.AddRowOrderedSortLeftToRight(this.Container.length + (isAddNewRow ? 1 : 0), this.Container[0].length,this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType,this.rowCount)
+        this.Container = this.sortService.AddRowOrderedSortLeftToRight(this.Container.length + (isAddNewRow ? 1 : 0), this.Container[0].length, this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.rowCount)
     }
     else if (this.selectedSortType == 10) {
       //Önceden kolon eklenmemiş ise ilk sefer satır ekleniyor ise.
       if (!this.isAddColumn)
-        this.Container = this.sortService.AddRowOrderedSortRightToLeft(Number(currentList.length / this.columnCount) + (isAddNewRow ? 1 : 0), this.columnCount,this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType,this.rowCount)
+        this.Container = this.sortService.AddRowOrderedSortRightToLeft(Number(currentList.length / this.columnCount) + (isAddNewRow ? 1 : 0), this.columnCount, this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.rowCount)
       //Önceden kolon eklenmiş ise buna satır ekleyebiliriz. "this.Container.length" yeni eklenmiş dahil toplam satır sayısıdır. "this.Container[0].length" yeni eklenmiş dahil toplam kolon sayısıdır.
       else
-        this.Container = this.sortService.AddRowOrderedSortRightToLeft(this.Container.length + (isAddNewRow ? 1 : 0), this.Container[0].length,this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType,this.rowCount)
+        this.Container = this.sortService.AddRowOrderedSortRightToLeft(this.Container.length + (isAddNewRow ? 1 : 0), this.Container[0].length, this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.rowCount)
     }
   }
 
@@ -204,23 +242,22 @@ export class AppComponent {
     if (this.selectedSortType == 9) {
       //Önceden satır eklenmemiş ise ilk sefer kolon ekleniyor ise.
       if (!this.isAddRow)
-        this.Container = this.sortService.AddColumnOrderedSortLeftToRight(this.rowCount, Number(currentList.length / this.rowCount) + (isAddNewColumn ? 1 : 0),this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.columnCount)
+        this.Container = this.sortService.AddColumnOrderedSortLeftToRight(this.rowCount, Number(currentList.length / this.rowCount) + (isAddNewColumn ? 1 : 0), this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.columnCount)
       //Önceden satır eklenmiş ise buna kolon ekleyebiliriz. "this.Container.length" yeni eklenmiş dahil toplam satır sayısıdır. "this.Container[0].length" yeni eklenmiş dahil toplam kolon sayısıdır.
       else
-        this.Container = this.sortService.AddColumnOrderedSortLeftToRight(this.Container.length, this.Container[0].length + (isAddNewColumn ? 1 : 0),this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.Container[0].length)
+        this.Container = this.sortService.AddColumnOrderedSortLeftToRight(this.Container.length, this.Container[0].length + (isAddNewColumn ? 1 : 0), this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.Container[0].length)
     }
     else if (this.selectedSortType == 10) {
       if (!this.isAddRow)
-        this.Container = this.sortService.AddColumnOrderedSortRightToLeft(this.rowCount, Number(currentList.length / this.rowCount) + (isAddNewColumn ? 1 : 0),this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.columnCount)
+        this.Container = this.sortService.AddColumnOrderedSortRightToLeft(this.rowCount, Number(currentList.length / this.rowCount) + (isAddNewColumn ? 1 : 0), this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.columnCount)
       else
-        this.Container = this.sortService.AddColumnOrderedSortRightToLeft(this.Container.length, this.Container[0].length + (isAddNewColumn ? 1 : 0),this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.Container[0].length)
+        this.Container = this.sortService.AddColumnOrderedSortRightToLeft(this.Container.length, this.Container[0].length + (isAddNewColumn ? 1 : 0), this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.Container[0].length)
     }
   }
-  Minus()
-  {
-    this.seatStartNumber>1?this.seatStartNumber--:this.seatStartNumber;
+  Minus() {
+    this.seatStartNumber > 1 ? this.seatStartNumber-- : this.seatStartNumber;
   }
-  Plus(){
+  Plus() {
     this.seatStartNumber++;
   }
 }

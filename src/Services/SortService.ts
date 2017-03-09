@@ -7,6 +7,19 @@ export class SortService implements ISortService {
     basePositionCordinate: number = 30;
     constructor() { }
 
+    ConvertNumberToRoman(num) {
+        if (!+num)
+            return false;
+        var digits = String(+num).split(""),
+            key = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM",
+                "", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC",
+                "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"],
+            roman = "",
+            i = 3;
+        while (i--)
+            roman = (key[+digits.pop() + (i * 10)] || "") + roman;
+        return Array(+digits.join("") + 1).join("M") + roman;
+    }
     //currentList var ise dizilmiş olna koltukların eski halleri gönderilmiş demektir.
     //isIgnoreGaps: Koltuk iptal işileminde, sıralama anında iptal edilen koltuk sayılsın mı sayılmasın mı?
     SortLeftToRight(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number) {
@@ -14,7 +27,7 @@ export class SortService implements ISortService {
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber: number = selectedCounterType != 0 ? selectedCounterType : 1;
         seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
@@ -37,7 +50,7 @@ export class SortService implements ISortService {
 
                 }
                 else {
-                    seatCounter++;                    
+                    seatCounter++;
                     seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                 }
             }
@@ -50,7 +63,7 @@ export class SortService implements ISortService {
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber: number = selectedCounterType != 0 ? selectedCounterType : 1;
         seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
 
         for (var r = 0; r < rowCount; r++) {
@@ -72,7 +85,7 @@ export class SortService implements ISortService {
 
                 }
                 else {
-                    seatCounter++;                    
+                    seatCounter++;
                     seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                 }
             }
@@ -86,7 +99,7 @@ export class SortService implements ISortService {
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber: number = selectedCounterType != 0 ? selectedCounterType : 1;
         seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
 
         for (var r = 0; r < rowCount; r++) {
@@ -111,7 +124,7 @@ export class SortService implements ISortService {
                 }
                 else {
 
-                    seatCounter++;                    
+                    seatCounter++;
                     seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                 }
             }
@@ -125,7 +138,7 @@ export class SortService implements ISortService {
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber: number = selectedCounterType != 0 ? selectedCounterType : 1;
         seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
 
         for (var r = 0; r < rowCount; r++) {
@@ -149,7 +162,7 @@ export class SortService implements ISortService {
 
                 }
                 else {
-                    seatCounter++;                    
+                    seatCounter++;
                     seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                 }
             }
@@ -163,7 +176,7 @@ export class SortService implements ISortService {
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber: number = selectedCounterType != 0 ? selectedCounterType : 1;
 
         seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
         for (var r = 0; r < rowCount; r++) {
@@ -185,7 +198,7 @@ export class SortService implements ISortService {
 
                     }
                     else {
-                        seatCounter++;                        
+                        seatCounter++;
                         seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                     }
                 }
@@ -211,7 +224,7 @@ export class SortService implements ISortService {
 
                     }
                     else {
-                        seatCounter++;                        
+                        seatCounter++;
                         seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                     }
                 }
@@ -235,7 +248,7 @@ export class SortService implements ISortService {
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber: number = selectedCounterType != 0 ? selectedCounterType : 1;
         seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
 
         for (var r = 0; r < rowCount; r++) {
@@ -281,7 +294,7 @@ export class SortService implements ISortService {
 
                     }
                     else {
-                        seatCounter++;                        
+                        seatCounter++;
                         seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                     }
                 }
@@ -303,7 +316,7 @@ export class SortService implements ISortService {
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber: number = selectedCounterType != 0 ? selectedCounterType : 1;
         seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
 
         for (var r = 0; r < rowCount; r++) {
@@ -325,7 +338,7 @@ export class SortService implements ISortService {
 
                     }
                     else {
-                        seatCounter++;                        
+                        seatCounter++;
                         seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                     }
                 }
@@ -351,7 +364,7 @@ export class SortService implements ISortService {
 
                     }
                     else {
-                        seatCounter++;                        
+                        seatCounter++;
                         seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                     }
                 }
@@ -375,7 +388,7 @@ export class SortService implements ISortService {
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber: number = selectedCounterType != 0 ? selectedCounterType : 1;
         seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
 
         for (var r = 0; r < rowCount; r++) {
@@ -397,7 +410,7 @@ export class SortService implements ISortService {
 
                     }
                     else {
-                        seatCounter++;                        
+                        seatCounter++;
                         seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                     }
                 }
@@ -421,7 +434,7 @@ export class SortService implements ISortService {
 
                     }
                     else {
-                        seatCounter++;                        
+                        seatCounter++;
                         seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                     }
                 }
@@ -444,7 +457,7 @@ export class SortService implements ISortService {
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber: number = selectedCounterType != 0 ? selectedCounterType : 1;
 
         seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
         for (var r = 0; r < rowCount; r++) {
@@ -468,7 +481,7 @@ export class SortService implements ISortService {
 
                 }
                 else {
-                    seatCounter++;                    
+                    seatCounter++;
                     seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                 }
             }
@@ -484,7 +497,7 @@ export class SortService implements ISortService {
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber: number = selectedCounterType != 0 ? selectedCounterType : 1;
         seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
@@ -508,8 +521,8 @@ export class SortService implements ISortService {
 
                 }
                 else {
-                    seatCounter++;                    
-                    seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);                  
+                    seatCounter++;
+                    seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                 }
             }
             Container.push(SeatList.reverse());
@@ -525,7 +538,7 @@ export class SortService implements ISortService {
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber: number = selectedCounterType != 0 ? selectedCounterType : 1;
         seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
@@ -549,7 +562,7 @@ export class SortService implements ISortService {
 
                 }
                 else {
-                    seatCounter++;                    
+                    seatCounter++;
                     seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                 }
             }
@@ -565,7 +578,7 @@ export class SortService implements ISortService {
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber: number = selectedCounterType != 0 ? selectedCounterType : 1;
         seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
         for (var r = 0; r < rowCount; r++) {
             var SeatList: Seat[] = [];
@@ -586,7 +599,7 @@ export class SortService implements ISortService {
 
                 }
                 else {
-                    seatCounter++;                    
+                    seatCounter++;
                     seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                 }
             }
@@ -603,7 +616,7 @@ export class SortService implements ISortService {
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber: number = selectedCounterType != 0 ? selectedCounterType : 1;
         seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
         //var newAddSeatCount: number = 0;//Yeni eklenen koltuk artımı
         for (var r = 0; r < rowCount; r++) {
@@ -643,7 +656,7 @@ export class SortService implements ISortService {
 
                 }
                 else {
-                    seatCounter++;                    
+                    seatCounter++;
                     seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                 }
             }
@@ -659,7 +672,7 @@ export class SortService implements ISortService {
         var seatCounter = 1;
         var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
-        var seatDisplayNumber:number = selectedCounterType != 0 ? selectedCounterType : 1;
+        var seatDisplayNumber: number = selectedCounterType != 0 ? selectedCounterType : 1;
         seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
         //var newAddSeatCount: number = 0;//Yeni eklenen koltuk artımı
         for (var r = 0; r < rowCount; r++) {
@@ -699,7 +712,7 @@ export class SortService implements ISortService {
 
                 }
                 else {
-                    seatCounter++;                    
+                    seatCounter++;
                     seatDisplayNumber = Number(seatDisplayNumber) + Number(selectedCounterType != 0 ? 2 : 1);
                 }
             }
@@ -710,6 +723,7 @@ export class SortService implements ISortService {
         }
         return Container;
     }
+
     SortType = [
         {
             id: 1, name: "Soldan Sağ"
