@@ -7,7 +7,7 @@ export class SortService implements ISortService {
     basePositionCordinate: number = 30;
     constructor() { }
 
-    ConvertNumberToRoman(num) {
+    ConvertNumberToRoman(num):any {
         if (!+num)
             return false;
         var digits = String(+num).split(""),
