@@ -216,7 +216,7 @@ export class SortService implements ISortService {
                     var st = new Seat(seatCounter,
                         this.basePositionCordinate * r, this.basePositionCordinate * (columnCount - c - 1),
                         //currentSeat != null ? currentSeat[0].SeatClass : 1, seatCounterUnique);
-                        currentSeat != null ? currentSeat.SeatClass : 1, seatCounterUnique, r + 1, c + 1, seatDisplayNumber);
+                        currentSeat != null ? currentSeat.SeatClass : 1, seatCounterUnique, r + 1, Number(columnCount) - Number(c), seatDisplayNumber);
 
                     SeatList.push(st);
                     seatCounterUnique++;
@@ -286,7 +286,7 @@ export class SortService implements ISortService {
 
                     var st = new Seat(seatCounter,
                         this.basePositionCordinate * (rowCount - 1 - r), this.basePositionCordinate * (columnCount - c - 1),
-                        currentSeat != null ? currentSeat.SeatClass : 1, seatCounterUnique, r + 1, c + 1, seatDisplayNumber);
+                        currentSeat != null ? currentSeat.SeatClass : 1, seatCounterUnique, r + 1, Number(columnCount) - Number(c), seatDisplayNumber);
 
                     SeatList.push(st);
                     seatCounterUnique++;
@@ -331,7 +331,7 @@ export class SortService implements ISortService {
 
                     var st = new Seat(seatCounter, this.basePositionCordinate * r, this.basePositionCordinate * c,
                         //currentSeat != null ? currentSeat[0].SeatClass : 1, seatCounterUnique);
-                        currentSeat != null ? currentSeat.SeatClass : 1, seatCounterUnique, r + 1, c + 1, seatDisplayNumber);
+                        currentSeat != null ? currentSeat.SeatClass : 1, seatCounterUnique, r + 1, Number(columnCount) - Number(c), seatDisplayNumber);
                     SeatList.push(st);
                     seatCounterUnique++;
                     if (st.SeatClass == 4 && isIgnoreGaps) {
@@ -403,7 +403,7 @@ export class SortService implements ISortService {
                         currentList[(rowCount - r) * columnCount - (columnCount - c)] : null;
 
                     var st = new Seat(seatCounter, this.basePositionCordinate * (rowCount - 1 - r), this.basePositionCordinate * c,
-                        currentSeat != null ? currentSeat.SeatClass : 1, seatCounterUnique, r + 1, c + 1, seatDisplayNumber);
+                        currentSeat != null ? currentSeat.SeatClass : 1, seatCounterUnique, r + 1, Number(columnCount) - Number(c), seatDisplayNumber);
                     SeatList.push(st);
                     seatCounterUnique++;
                     if (st.SeatClass == 4 && isIgnoreGaps) {
@@ -426,7 +426,7 @@ export class SortService implements ISortService {
                     var st = new Seat(seatCounter,
                         this.basePositionCordinate * (rowCount - 1 - r), this.basePositionCordinate * (columnCount - c - 1),
                         //currentSeat != null ? currentSeat[0].SeatClass : 1, seatCounterUnique);
-                        currentSeat != null ? currentSeat.SeatClass : 1, seatCounterUnique, r + 1, c + 1, seatDisplayNumber);
+                        currentSeat != null ? currentSeat.SeatClass : 1, seatCounterUnique, r + 1, Number(c + 1), seatDisplayNumber);
 
                     SeatList.push(st);
                     seatCounterUnique++;
