@@ -18,7 +18,7 @@
             <input class="rowInput" [(ngModel)]="blockRow[i]!=null?blockRow[i]:(i<46)?blockRow[i%23]+blockRow[i%23]:blockRow[i%23]+blockRow[i%23]+blockRow[i%23]" id="{{i}}" name="{{i}}" trackBy required/>            
             <div class="seat" *ngFor="let seat of row" (click)="TriggerEvent(seat)" [style.top.px]="seat.Top" [style.left.px]="seat.Left"
                 [attr.top]="seat.Top" [attr.left]="seat.Left">
-                <span class="seat-label" [ngClass]="seat.SeatCssClass" [attr.rowID]="seat.ID" [attr.rowNo]="seat.RowNo" [attr.columnNo]="seat.SeatDisplayNumber" [attr.IsAddNew]="seat.IsAddNewSeat">
+                <span class="seat-label" [ngClass]="seat.SeatCssClass" [attr.rowID]="seat.ID" [attr.rowNo]="seat.RowNo" [attr.columnNo]="seat.ColumnNo" [attr.IsAddNew]="seat.IsAddNewSeat">
                     <span *ngIf="seat.SeatClass!=4">{{ seat.SeatDisplayNumber }}</span>
                 </span>
             </div>

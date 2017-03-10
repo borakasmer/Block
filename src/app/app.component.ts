@@ -219,17 +219,17 @@ export class AppComponent {
 
     if (this.selectedSortType == 9) {
       if (!this.isAddColumn)
-        this.Container = this.sortService.AddRowOrderedSortLeftToRight(Number(currentList.length / this.columnCount) + (isAddNewRow ? 1 : 0), this.columnCount, this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.rowCount)
+        this.Container = this.sortService.AddRowOrderedSortLeftToRight(Number(currentList.length / this.columnCount) + (isAddNewRow ? 1 : 0), this.columnCount, this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.rowCount,this.columnCount)
       else
-        this.Container = this.sortService.AddRowOrderedSortLeftToRight(this.Container.length + (isAddNewRow ? 1 : 0), this.Container[0].length, this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.rowCount)
+        this.Container = this.sortService.AddRowOrderedSortLeftToRight(this.Container.length + (isAddNewRow ? 1 : 0), this.Container[0].length, this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.rowCount,this.columnCount)
     }
     else if (this.selectedSortType == 10) {
       //Önceden kolon eklenmemiş ise ilk sefer satır ekleniyor ise.
       if (!this.isAddColumn)
-        this.Container = this.sortService.AddRowOrderedSortRightToLeft(Number(currentList.length / this.columnCount) + (isAddNewRow ? 1 : 0), this.columnCount, this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.rowCount)
+        this.Container = this.sortService.AddRowOrderedSortRightToLeft(Number(currentList.length / this.columnCount) + (isAddNewRow ? 1 : 0), this.columnCount, this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.rowCount,this.columnCount)
       //Önceden kolon eklenmiş ise buna satır ekleyebiliriz. "this.Container.length" yeni eklenmiş dahil toplam satır sayısıdır. "this.Container[0].length" yeni eklenmiş dahil toplam kolon sayısıdır.
       else
-        this.Container = this.sortService.AddRowOrderedSortRightToLeft(this.Container.length + (isAddNewRow ? 1 : 0), this.Container[0].length, this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.rowCount)
+        this.Container = this.sortService.AddRowOrderedSortRightToLeft(this.Container.length + (isAddNewRow ? 1 : 0), this.Container[0].length, this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.rowCount,this.columnCount)
     }
   }
 
@@ -242,16 +242,18 @@ export class AppComponent {
     if (this.selectedSortType == 9) {
       //Önceden satır eklenmemiş ise ilk sefer kolon ekleniyor ise.
       if (!this.isAddRow)
-        this.Container = this.sortService.AddColumnOrderedSortLeftToRight(this.rowCount, Number(currentList.length / this.rowCount) + (isAddNewColumn ? 1 : 0), this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.columnCount)
-      //Önceden satır eklenmiş ise buna kolon ekleyebiliriz. "this.Container.length" yeni eklenmiş dahil toplam satır sayısıdır. "this.Container[0].length" yeni eklenmiş dahil toplam kolon sayısıdır.
+        this.Container = this.sortService.AddColumnOrderedSortLeftToRight(this.rowCount, Number(currentList.length / this.rowCount) + (isAddNewColumn ? 1 : 0), this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.columnCount,this.rowCount)
+      //Önceden satır eklenmiş ise buna kolon ekleyebiliriz. "this.Container.length" yeni eklenmiş dahil toplam satır sayısıdır. "this.Container[0].length" yeni eklenmiş dahil toplam kolon sayısıdır. Aşağıda sondan 1 önceki parametrede this.Container[0].length kullanılmasında amaç      
       else
-        this.Container = this.sortService.AddColumnOrderedSortLeftToRight(this.Container.length, this.Container[0].length + (isAddNewColumn ? 1 : 0), this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.Container[0].length)
+        //this.Container = this.sortService.AddColumnOrderedSortLeftToRight(this.Container.length, this.Container[0].length + (isAddNewColumn ? 1 : 0), this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.Container[0].length)
+        this.Container = this.sortService.AddColumnOrderedSortLeftToRight(this.Container.length, this.Container[0].length + (isAddNewColumn ? 1 : 0), this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.columnCount,this.rowCount)
     }
     else if (this.selectedSortType == 10) {
       if (!this.isAddRow)
-        this.Container = this.sortService.AddColumnOrderedSortRightToLeft(this.rowCount, Number(currentList.length / this.rowCount) + (isAddNewColumn ? 1 : 0), this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.columnCount)
+        this.Container = this.sortService.AddColumnOrderedSortRightToLeft(this.rowCount, Number(currentList.length / this.rowCount) + (isAddNewColumn ? 1 : 0), this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.columnCount,this.rowCount)
       else
-        this.Container = this.sortService.AddColumnOrderedSortRightToLeft(this.Container.length, this.Container[0].length + (isAddNewColumn ? 1 : 0), this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.Container[0].length)
+        //this.Container = this.sortService.AddColumnOrderedSortRightToLeft(this.Container.length, this.Container[0].length + (isAddNewColumn ? 1 : 0), this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.Container[0].length,this.columnCount)
+        this.Container = this.sortService.AddColumnOrderedSortRightToLeft(this.Container.length, this.Container[0].length + (isAddNewColumn ? 1 : 0), this.seatStartNumber, currentList, this.isIgnoreGaps, this.selectedCounterType, this.columnCount,this.rowCount)
     }
   }
   Minus() {

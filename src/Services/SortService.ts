@@ -7,7 +7,7 @@ export class SortService implements ISortService {
     basePositionCordinate: number = 30;
     constructor() { }
 
-    ConvertNumberToRoman(num):any {
+    ConvertNumberToRoman(num): any {
         if (!+num)
             return false;
         var digits = String(+num).split(""),
@@ -455,7 +455,6 @@ export class SortService implements ISortService {
     OrderedSortLeftToRight(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number) {
         var Container = [];
         var seatCounter = 1;
-        var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
         var seatDisplayNumber: number = selectedCounterType != 0 ? selectedCounterType : 1;
 
@@ -464,19 +463,18 @@ export class SortService implements ISortService {
             var SeatList: Seat[] = [];
             for (var c = 0; c < columnCount; c++) {
 
+                var id = Number(String(Number(r) + 1) + String(Number(c) + 1));
                 //Eklenecek koltuğun eski durumu var mı diye bakılır? Varsa var olan güncel hali alınır.
                 var currentSeat = currentList != null && currentList != undefined ?
-                    //currentList.filter(se => se.ID == seatCounterUnique) : null;
-                    currentList[seatCounterUnique - 1] : null;
+                    currentList.filter(cur => cur.ID == id)[0] : null;
 
                 //
                 var st = new Seat(
                     //(currentSeat != null && currentSeat[0].SeatClass == 4 && isIgnoreGaps) ? null : seatCounter,
                     seatCounter,
                     this.basePositionCordinate * r, this.basePositionCordinate * c,
-                    currentSeat != null ? currentSeat.SeatClass : 1, seatCounterUnique, r + 1, c + 1, seatDisplayNumber);
+                    currentSeat != null ? currentSeat.SeatClass : 1, id, r + 1, c + 1, seatDisplayNumber);
                 SeatList.push(st);
-                seatCounterUnique++;
                 if (st.SeatClass == 4 && isIgnoreGaps) {
 
                 }
@@ -495,7 +493,6 @@ export class SortService implements ISortService {
     OrderedSortRightToLeft(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number) {
         var Container = [];
         var seatCounter = 1;
-        var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
         var seatDisplayNumber: number = selectedCounterType != 0 ? selectedCounterType : 1;
         seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
@@ -503,20 +500,18 @@ export class SortService implements ISortService {
             var SeatList: Seat[] = [];
             for (var c = 0; c < columnCount; c++) {
 
+                var id = Number(String(Number(r) + 1) + String(Number(c) + 1));
                 //Eklenecek koltuğun eski durumu var mı diye bakılır? Varsa var olan güncel hali alınır.
                 var currentSeat = currentList != null && currentList != undefined ?
-                    //currentList.filter(se => se.ID == seatCounterUnique) : null; 
-                    //currentList[columnCount * (r + 1) - (columnCount - (c + 1)) - 1] : null;
-                    currentList[columnCount * (r + 1) - c - 1] : null;
+                    currentList.filter(cur => cur.ID == id)[0] : null;
 
                 //
                 var st = new Seat(
                     //(currentSeat != null && currentSeat[0].SeatClass == 4 && isIgnoreGaps) ? null : seatCounter,
                     seatCounter,
                     this.basePositionCordinate * r, this.basePositionCordinate * (columnCount - c - 1),
-                    currentSeat != null ? currentSeat.SeatClass : 1, seatCounterUnique, r + 1, c + 1, seatDisplayNumber);
+                    currentSeat != null ? currentSeat.SeatClass : 1, id, r + 1, c + 1, seatDisplayNumber);
                 SeatList.push(st);
-                seatCounterUnique++;
                 if (st.SeatClass == 4 && isIgnoreGaps) {
 
                 }
@@ -533,10 +528,10 @@ export class SortService implements ISortService {
         }
         return Container;
     }
-    AddRowOrderedSortLeftToRight(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number, inputRowCount?: number) {
+    AddRowOrderedSortLeftToRight(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number, inputRowCount?: number, inputColumnCount?: number) {
         var Container = [];
         var seatCounter = 1;
-        var seatCounterUnique = 1;
+
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
         var seatDisplayNumber: number = selectedCounterType != 0 ? selectedCounterType : 1;
         seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
@@ -544,10 +539,10 @@ export class SortService implements ISortService {
             var SeatList: Seat[] = [];
             for (var c = 0; c < columnCount; c++) {
 
+                var id = Number(String(Number(r) + 1) + String(Number(c) + 1));
                 //Eklenecek koltuğun eski durumu var mı diye bakılır? Varsa var olan güncel hali alınır.
                 var currentSeat = currentList != null && currentList != undefined ?
-                    //currentList.filter(se => se.ID == seatCounterUnique) : null;
-                    currentList[seatCounterUnique - 1] : null;
+                    currentList.filter(cur => cur.ID == id)[0] : null;
 
                 //     
                 //Yeni eklenen satır'a ait seatlerin hepsi iptal durumundadır. currentSeat'i null yani önceki değeri olmayan yeni eklenen seatler Açık yani 1'dir.Önceden eklenen seatler currentSeat ile bakılıp, önceki değeri alınır.           
@@ -555,9 +550,9 @@ export class SortService implements ISortService {
                     //(currentSeat != null && currentSeat[0].SeatClass == 4 && isIgnoreGaps) ? null : seatCounter,
                     seatCounter,
                     this.basePositionCordinate * r, this.basePositionCordinate * c,
-                    currentSeat != null ? currentSeat.SeatClass : (r == rowCount - 1 ? 4 : 1), seatCounterUnique, r + 1, c + 1, seatDisplayNumber, (r > inputRowCount - 1) ? true : false);
+                    currentSeat != null ? currentSeat.SeatClass : (r == rowCount - 1 ? 4 : 1), id, r + 1, c + 1, seatDisplayNumber, ((r > inputRowCount - 1) || (c > inputColumnCount - 1)) ? true : false);
                 SeatList.push(st);
-                seatCounterUnique++;
+
                 if (st.SeatClass == 4 && isIgnoreGaps) {
 
                 }
@@ -573,7 +568,7 @@ export class SortService implements ISortService {
         }
         return Container;
     }
-    AddRowOrderedSortRightToLeft(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number, inputRowCount?: number) {
+    AddRowOrderedSortRightToLeft(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number, inputRowCount?: number, inputColumnCount?: number) {
         var Container = [];
         var seatCounter = 1;
         var seatCounterUnique = 1;
@@ -584,15 +579,16 @@ export class SortService implements ISortService {
             var SeatList: Seat[] = [];
             for (var c = 0; c < columnCount; c++) {
 
+                var id = Number(String(Number(r) + 1) + String(Number(c) + 1));
                 //Eklenecek koltuğun eski durumu var mı diye bakılır? Varsa var olan güncel hali alınır.
                 var currentSeat = currentList != null && currentList != undefined ?
-                    currentList[columnCount * (r + 1) - c - 1] : null;
+                    currentList.filter(cur => cur.ID == id)[0] : null;
 
                 //Yeni eklenen satır'a ait seatlerin hepsi iptal durumundadır. currentSeat'i null yani önceki değeri olmayan yeni eklenen seatler Açık yani 1'dir.Önceden eklenen seatler currentSeat ile bakılıp, önceki değeri alınır.           
                 var st = new Seat(
                     seatCounter,
                     this.basePositionCordinate * r, this.basePositionCordinate * (columnCount - c - 1),
-                    currentSeat != null ? currentSeat.SeatClass : (r == rowCount - 1 ? 4 : 1), seatCounterUnique, r + 1, c + 1, seatDisplayNumber, (r > inputRowCount - 1) ? true : false);
+                    currentSeat != null ? currentSeat.SeatClass : (r == rowCount - 1 ? 4 : 1), id, r + 1, c + 1, seatDisplayNumber, ((r > inputRowCount - 1) || (c > inputColumnCount - 1)) ? true : false);
                 SeatList.push(st);
                 seatCounterUnique++;
                 if (st.SeatClass == 4 && isIgnoreGaps) {
@@ -611,10 +607,10 @@ export class SortService implements ISortService {
         }
         return Container;
     }
-    AddColumnOrderedSortLeftToRight(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number, inputColumnCount?: number) {
+
+    AddColumnOrderedSortLeftToRight(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number, inputColumnCount?: number, inputRowCount?: number) {
         var Container = [];
         var seatCounter = 1;
-        var seatCounterUnique = 1;
         //Tek ve çift sıralama için kullanılır. Sadece görüntüde vardır. Hesaplamalarda kullanılmaz. Yani Maskeleme yapmaktadır.
         var seatDisplayNumber: number = selectedCounterType != 0 ? selectedCounterType : 1;
         seatStartNumber != 1 ? seatDisplayNumber = seatStartNumber : null;
@@ -623,25 +619,12 @@ export class SortService implements ISortService {
             var SeatList: Seat[] = [];
             for (var c = 0; c < columnCount; c++) {
                 var currentSeat;
-                //Eklenecek koltuğun eski durumu var mı diye bakılır? Varsa var olan güncel hali alınır.
-                //[Son kolon'a gelinmiş ise tüm seatsayısı + C şeklinde koltuk aranır.](c > inputColumnCount - 1) Amaç: Yeni eklenen kolon mu diye sorgulamak.
-                if (c > inputColumnCount - 1) {
-                    //Yeni eklnen koltuk ID için tüm koltuk sayısı + yeni eklenen koltuk sayısı
-                    //newAddSeatCount += 1;
-                    //var id = (Number(rowCount) * Number(inputColumnCount)) + newAddSeatCount;
-                    //Yeni id değeri yeni eklenen koltuk için önceki eklenen koltukların toplamı + herbir SATIRA göre +1 artan bir değerdir. 
-                    //3*3 lük bir blokda aynı satırda olan 4. kolon ID=10 iken 5. kolon ID=13 dür. 
-                    var id = (Number(rowCount) * Number(inputColumnCount)) + (rowCount * (c - inputColumnCount)) + (r + 1);
-                    // Gelen dizi içerisinde ilgili Seat'in olup olmadığı burda [] dizi ile bulunamıyor. Çünkü düzgün bir sıralı giiş yok. Bunun için mecburen ID'ye göre filter işlemine gidilmiştir.
-                    currentSeat = currentList != null && currentList != undefined ?
-                        currentList.filter(cur => cur.ID == id)[0] : null;
-                }
-                else {
-                    //İlk sıralama durumunda dizilen kolonlar. Yeni eklenen koltuk işlemleri burada yok.
-                    currentSeat = currentList != null && currentList != undefined ?
-                        currentList.filter(se => se.ID == seatCounterUnique)[0] : null;
-                    //currentList[seatCounterUnique - 1] : null;
-                }
+
+                var id = Number(String(Number(r) + 1) + String(Number(c) + 1));
+                // Gelen dizi içerisinde ilgili Seat'in olup olmadığı burda [] dizi ile bulunamıyor. Çünkü düzgün bir sıralı giiş yok. Bunun için mecburen ID'ye göre filter işlemine gidilmiştir.
+                currentSeat = currentList != null && currentList != undefined ?
+                    currentList.filter(cur => cur.ID == id)[0] : null;
+
                 // LeftToRight'a göre değişen tek şey Top,Left position'dır.              
                 var st = new Seat(
                     //(currentSeat != null && currentSeat[0].SeatClass == 4 && isIgnoreGaps) ? null : seatCounter,
@@ -649,9 +632,8 @@ export class SortService implements ISortService {
                     this.basePositionCordinate * r, this.basePositionCordinate * c,
                     currentSeat != null ? currentSeat.SeatClass : (c == columnCount - 1 ? 4 : 1),
                     //(c > inputColumnCount - 1) ? (Number(rowCount) * Number(inputColumnCount)) + newAddSeatCount : seatCounterUnique, r + 1, c + 1, seatDisplayNumber);
-                    (c > inputColumnCount - 1) ? (Number(rowCount) * Number(inputColumnCount)) + (rowCount * (c - inputColumnCount)) + (r + 1) : seatCounterUnique, r + 1, c + 1, seatDisplayNumber, (c > inputColumnCount - 1) ? true : false);
+                    id, r + 1, c + 1, seatDisplayNumber, ((r > inputRowCount - 1) || (c > inputColumnCount - 1)) ? true : false);
                 SeatList.push(st);
-                c > inputColumnCount - 1 ? seatCounterUnique : seatCounterUnique++; //Eğer Yeni eklenen kolon ise counter artmaz. Çünkü yeni eklenen koltukların ID'si farklı bir algoritma ile bulunuyor."seatCounterUnique" kullanılmıyor.
                 if (st.SeatClass == 4 && isIgnoreGaps) {
 
                 }
@@ -667,7 +649,8 @@ export class SortService implements ISortService {
         }
         return Container;
     }
-    AddColumnOrderedSortRightToLeft(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number, inputColumnCount?: number) {
+
+    AddColumnOrderedSortRightToLeft(rowCount: number, columnCount: number, seatStartNumber: number, currentList?: Seat[], isIgnoreGaps?: boolean, selectedCounterType?: number, inputColumnCount?: number, inputRowCount?: number) {
         var Container = [];
         var seatCounter = 1;
         var seatCounterUnique = 1;
@@ -679,33 +662,19 @@ export class SortService implements ISortService {
             var SeatList: Seat[] = [];
             for (var c = 0; c < columnCount; c++) {
                 var currentSeat;
-                //Eklenecek koltuğun eski durumu var mı diye bakılır? Varsa var olan güncel hali alınır.
-                //[Son kolon'a gelinmiş ise tüm seatsayısı + C şeklinde koltuk aranır.](c > inputColumnCount - 1) Amaç: Yeni eklenen kolon mu diye sorgulamak.
-                if (c > inputColumnCount - 1) {
-                    //Yeni eklnen koltuk ID için tüm koltuk sayısı + yeni eklenen koltuk sayısı
-                    //newAddSeatCount += 1;
-                    //var id = (Number(rowCount) * Number(inputColumnCount)) + newAddSeatCount;
-                    //Yeni id değeri yeni eklenen koltuk için önceki eklenen koltukların toplamı + herbir SATIRA göre +1 artan bir değerdir. 
-                    //3*3 lük bir blokda aynı satırda olan 4. kolon ID=10 iken 5. kolon ID=13 dür.
-                    var id = (Number(rowCount) * Number(inputColumnCount)) + (rowCount * (c - inputColumnCount)) + (r + 1);
-                    // Gelen dizi içerisinde ilgili Seat'in olup olmadığı burda [] dizi ile bulunamıyor. Çünkü düzgün bir sıralı giiş yok. Bunun için mecburen ID'ye göre filter işlemine gidilmiştir.
-                    currentSeat = currentList != null && currentList != undefined ?
-                        currentList.filter(cur => cur.ID == id)[0] : null;
-                }
-                else {
-                    //İlk sıralama durumunda dizilen kolonlar. Yeni eklenen koltuk işlemleri burada yok.
-                    currentSeat = currentList != null && currentList != undefined ?
-                        currentList.filter(se => se.ID == seatCounterUnique)[0] : null;
-                    //currentList[seatCounterUnique - 1] : null;
-                }
+
+                var id = Number(String(Number(r) + 1) + String(Number(c) + 1));
+                // Gelen dizi içerisinde ilgili Seat'in olup olmadığı burda [] dizi ile bulunamıyor. Çünkü düzgün bir sıralı giiş yok. Bunun için mecburen ID'ye göre filter işlemine gidilmiştir.
+                currentSeat = currentList != null && currentList != undefined ?
+                    currentList.filter(cur => cur.ID == id)[0] : null;
+
                 // LeftToRight'a göre değişen tek şey Top,Left position'dır.                
                 var st = new Seat(
                     //(currentSeat != null && currentSeat[0].SeatClass == 4 && isIgnoreGaps) ? null : seatCounter,
                     seatCounter,
                     this.basePositionCordinate * r, this.basePositionCordinate * (columnCount - c - 1),
                     currentSeat != null ? currentSeat.SeatClass : (c == columnCount - 1 ? 4 : 1),
-                    //(c > inputColumnCount - 1) ? (Number(rowCount) * Number(inputColumnCount)) + newAddSeatCount : seatCounterUnique, r + 1, c + 1, seatDisplayNumber);
-                    (c > inputColumnCount - 1) ? (Number(rowCount) * Number(inputColumnCount)) + (rowCount * (c - inputColumnCount)) + (r + 1) : seatCounterUnique, r + 1, c + 1, seatDisplayNumber, (c > inputColumnCount - 1) ? true : (c > inputColumnCount - 1) ? true : false);
+                    id, r + 1, c + 1, seatDisplayNumber, ((r > inputRowCount - 1) || (c > inputColumnCount - 1)) ? true : false);
                 SeatList.push(st);
                 c > inputColumnCount - 1 ? seatCounterUnique : seatCounterUnique++; // Eğer Yeni eklenen kolon ise counter artmaz. Çünkü yeni eklenen koltukların ID'si farklı bir algoritma ile bulunuyor."seatCounterUnique" kullanılmıyor.
                 if (st.SeatClass == 4 && isIgnoreGaps) {
