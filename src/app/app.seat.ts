@@ -194,6 +194,8 @@ export class SeatComponent implements OnInit {
     }
 
     private onMouseUp(event: MouseEvent): void {
+        var HasSoldSeat: boolean = false;
+
         if (this.isOnContainer) {
             this.endCoordinate = new Coordinate(event.clientX, event.clientY);
             let selectedSeats = [];
@@ -201,14 +203,24 @@ export class SeatComponent implements OnInit {
                 this.startCoordinate = new Coordinate(this.resizableElement.nativeElement.offsetLeft, this.resizableElement.nativeElement.offsetTop);
                 this.endCoordinate = new Coordinate(this.startCoordinate.X + this.resizableElement.nativeElement.offsetWidth, this.startCoordinate.Y + this.resizableElement.nativeElement.offsetHeight);
                 if (event.shiftKey)
+                {
                     this._ContainerSeat.forEach(row => {
                         row.forEach(rowseat => {
-                            if (rowseat.Top > this.startCoordinate.Y - 25 && rowseat.Left > this.startCoordinate.X - 25 &&
-                                rowseat.Top < this.endCoordinate.Y - 10 && rowseat.Left < this.endCoordinate.X - 10) {
-                                selectedSeats.push(rowseat);
-                            }
+                            if(rowseat.SeatClass != 1) //Blokta satılmış veya ayrılmış herhangi bir koltuk var mı kontrol et.
+                                HasSoldSeat = true;
                         });
-                    });
+                    }); 
+
+                    if(!HasSoldSeat) //Satılmış veya ayrılmış bir koltuk bulunamadığında seçim yapılmış bölgeyi koltukların tipini değiştir.
+                        this._ContainerSeat.forEach(row => {
+                            row.forEach(rowseat => {
+                                if (rowseat.Top > this.startCoordinate.Y - 25 && rowseat.Left > this.startCoordinate.X - 25 &&
+                                        rowseat.Top < this.endCoordinate.Y - 10 && rowseat.Left < this.endCoordinate.X - 10) {
+                                            selectedSeats.push(rowseat);
+                                }
+                            });
+                        });                     
+                }                  
                 this.TriggerEvent(selectedSeats);
                 this.SetResizableRectangleToDefault();
             }
