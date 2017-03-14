@@ -211,7 +211,7 @@ export class SeatComponent implements OnInit {
                         });
                     }); 
 
-                    if(!HasSoldSeat) //Satılmış veya ayrılmış bir koltuk bulunamadığında seçim yapılmış bölgeyi koltukların tipini değiştir.
+                    //if(!HasSoldSeat) //Satılmış veya ayrılmış bir koltuk bulunamadığında seçim yapılmış bölgeyi koltukların tipini değiştir.
                         this._ContainerSeat.forEach(row => {
                             row.forEach(rowseat => {
                                 if (rowseat.Top > this.startCoordinate.Y - 25 && rowseat.Left > this.startCoordinate.X - 25 &&
